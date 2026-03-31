@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "slideforge": {
+      "command": "npx",
+      "args": [
+        "mcp-remote@latest",
+        "https://api.slideforge.dev/mcp/",
+        "--header",
+        "Authorization: Bearer sf_live_YOUR_KEY"
+      ]
+    }
+  }
+}
