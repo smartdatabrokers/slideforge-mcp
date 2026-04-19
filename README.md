@@ -1,8 +1,8 @@
 # SlideForge MCP Server
 
 > Remote MCP server that generates consulting-quality PowerPoint slides.
-> Real .pptx files from templates ($0.03) or AI-designed custom layouts ($0.10–$0.20).
-> No installation required.
+> Real .pptx files from templates ($0.03) or AI-designed custom layouts ($0.20).
+> 8 tools. No installation required.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -10,11 +10,13 @@
 
 ## Features
 
-- **Template rendering** — 39 consulting frameworks (SWOT, KPI dashboard, timeline, comparison, Gantt, waterfall…). Instant results, $0.03–0.07/slide.
-- **Creative AI design** — Describe any slide in plain English. AI designs the optimal layout with consulting-grade typography. $0.10–0.20/slide.
+- **Template rendering** — 58 consulting frameworks (SWOT, KPI dashboard, timeline, comparison, Gantt, waterfall...). Instant results, $0.03-0.05/slide.
+- **Creative AI design** — Describe any slide in plain English. AI designs the optimal layout with consulting-grade typography. $0.20/slide.
 - **Deck generation** — Generate multi-slide decks in parallel. Mix template + creative slides. Auto-compiled into a single .pptx.
-- **Iterate & refine** — Improve any slide with text feedback. AI converges on quality through visual QA.
-- **Brand themes** — Upload your corporate .pptx or define colors/fonts → all future slides match your brand.
+- **Iterate & refine** — Improve any slide with text feedback. Works on all strategies (template, spec, creative, code).
+- **30 design system components** — Metric, BarList, Card, Table, Donut, LineTrend, Gantt, OrgTree, and more.
+- **Brand themes** — Upload your corporate .pptx or define colors/fonts. All future slides match your brand.
+- **Data-driven reports** — Connect Zoho Sprints, Jira, etc. via OAuth. Generate sprint retrospectives, PI progress, portfolio health.
 
 ---
 
@@ -45,7 +47,7 @@ claude mcp add slideforge --transport http https://api.slideforge.dev/mcp/
 ### Cursor / Windsurf / Other MCP Clients (API Key)
 
 1. Sign up at [slideforge.dev](https://slideforge.dev) — free $3 credit on signup
-2. Get your API key from the Console → API Keys page
+2. Get your API key from the Console
 3. Add to your MCP config:
 
 ```json
@@ -66,35 +68,30 @@ claude mcp add slideforge --transport http https://api.slideforge.dev/mcp/
 
 ---
 
-## Available Tools
+## 8 MCP Tools
 
-### Generation & Design
-
-| Tool | Description | Cost |
-|------|-------------|------|
-| `render_slide` | Render from a consulting template with data or brief | $0.03–0.07 |
-| `generate_slide` | AI-designed custom slide from natural language description | $0.10–0.20 |
-| `generate_deck` | Multi-slide PowerPoint deck (parallel generation + auto-compile) | Per-slide |
-| `iterate_slide` | Improve a previously generated slide based on text feedback | $0.05–0.20 |
-
-### Discovery
+### Slides & Decks
 
 | Tool | Description | Cost |
 |------|-------------|------|
-| `suggest_template` | Find best template(s) for your brief (batch support) | Free |
-| `search_templates` | Semantic search across 39 templates | Free |
-| `list_templates` | Browse all templates (filterable by category, audience, style) | Free |
-| `list_themes` | Available color themes and brand palettes | Free |
+| `create_slide` | Create, iterate, or inspect a slide. Modes: **auto** (brief → template or AI), **creative**, **spec** (JSON component spec), **code** (python-pptx sandbox), **iterate** (improve with feedback), **status** (poll job). | $0.03-0.20 |
+| `create_deck` | Multi-slide deck. Modes: **generate** (parallel render), **assemble** (merge existing slides), **fork** (A/B variant). | Per-slide |
+| `translate_deck` | Translate a PPTX preserving all formatting. 8 languages. | $0.02/slide |
 
-### Status & Account
+### Reports & Connections
 
 | Tool | Description | Cost |
 |------|-------------|------|
-| `get_slide_status` | Poll job status + download URLs + inline preview PNG | Free |
-| `list_jobs` | Recent generation jobs (filterable by status) | Free |
-| `get_usage` | Usage stats, cost breakdown, daily history | Free |
-| `get_capabilities` | Account status, available tools, optimal workflow | Free |
-| `submit_feedback` | Report bugs, request features, share testimonials | Free |
+| `generate_report` | Data-driven multi-slide report from a connected tool (Zoho Sprints, Jira, etc.). Omit slug to list available report types. | ~$0.12 |
+| `manage_connections` | OAuth connections to external tools. Actions: catalog, list, get, test, authorize, update, delete. | Free |
+
+### Discovery & Account
+
+| Tool | Description | Cost |
+|------|-------------|------|
+| `search_catalog` | Browse 58 templates, 30 components, and themes. Search by query, match by brief, or list all. | Free |
+| `upload_asset` | Upload a logo, theme PPTX, or image. Returns asset_id or theme_id. | Free |
+| `manage_account` | Balance, usage, job history, feedback, onboarding guide. | Free |
 
 ### Guided Workflows (MCP Prompts)
 
@@ -108,50 +105,51 @@ claude mcp add slideforge --transport http https://api.slideforge.dev/mcp/
 ## How It Works
 
 ```
-1. suggest_template("KPI dashboard for Q1 board review")
-   → finds best-matching template
+1. "Make me a KPI dashboard: revenue $12.4M (+18% YoY), 847 new clients"
+   → create_slide(brief="...") auto-routes to KPI Dashboard template
+   → instant .pptx + inline preview (<2s, $0.05)
 
-2a. Good match → render_slide(template=uuid, brief="Revenue $12.4M, +18% YoY...")
-    → instant .pptx (~1s, $0.03)
+2. "Now make a 2x2 matrix comparing build vs buy"
+   → create_slide(mode="creative", brief="...")
+   → AI designs it (~30s, $0.20)
 
-2b. No match → generate_slide(brief="Custom waterfall chart showing margin drivers...")
-    → AI designs it (~12s, $0.10)
+3. "Make the title larger and add a green checkmark"
+   → create_slide(mode="iterate", job_id="...", feedback="...")
+   → improved version with preview
 
-3. Not happy? → iterate_slide(job_id=..., feedback="Make the title larger, add a takeaway bar")
-   → improved version
-
-4. Need a deck? → generate_deck(prompt="Q1 Board Review", slide_count=5)
-   → 5 slides generated in parallel, compiled into one .pptx
+4. "Create a full 5-slide board update deck"
+   → create_deck(slides=[...5 briefs...])
+   → parallel render, compiled into one .pptx
 ```
 
-All tools return signed download URLs for `.pptx` files and PNG previews.
+All tools return signed download URLs for `.pptx` files and inline PNG previews.
 
 ---
 
 ## Pricing
 
-| | Draft | Pro |
-|---|---|---|
-| **Generate / Iterate** | $0.10 | $0.20 |
-| **Template Render** | $0.03–0.07 | — |
-| **AI Image** | $0.05 | $0.10 |
+| Action | Cost |
+|--------|------|
+| Template render (auto) | $0.03-0.05 |
+| Spec / code render | $0.03-0.05 |
+| AI generate | $0.20 |
+| Iterate | $0.10 |
+| Translate | $0.02/slide |
+| Report | ~$0.12 |
 
-- **Free trial:** $3 on signup — enough for ~30 template renders or ~15 creative slides
+- **Free trial:** $3 on signup — enough for ~60 template renders or ~15 creative slides
 - **No subscription.** USD wallet — top up when you need more ($10 minimum)
 - **Volume discounts:** $50 → +10% bonus, $100 → +15%, $200 → +20%
-- **Feedback rewards:** Approved feature requests earn $5, testimonials earn $2
 
 ---
 
 ## Authentication
 
-SlideForge supports two auth methods:
-
 **OAuth 2.1 (recommended for Claude Desktop)**
-Just add the URL — Claude Desktop handles the rest. Browser opens for Google login on first connection. New users are auto-provisioned with a $3 wallet.
+Just add the URL — Claude Desktop handles the rest. Browser opens for Google login on first connection.
 
 **API Key (for programmatic access / other clients)**
-Sign up at [slideforge.dev](https://slideforge.dev), grab your key from the console. Keys start with `sf_live_`. Pass via `Authorization: Bearer sf_live_xxx` header.
+Sign up at [slideforge.dev](https://slideforge.dev), grab your key from the console. Keys start with `sf_live_`.
 
 ---
 
@@ -161,14 +159,14 @@ All generated slides are real `.pptx` files (Microsoft PowerPoint format):
 - Editable text, shapes, and layouts
 - Compatible with PowerPoint, Google Slides, Keynote
 - PNG preview included for quick visual review
-- Inline preview in Claude Desktop via `get_slide_status`
+- PDF export available on all slides
 
 ---
 
 ## Support
 
 - **GitHub Issues:** [Report setup problems or bugs](https://github.com/smartdatabrokers/slideforge-mcp/issues)
-- **In-tool feedback:** Use the `submit_feedback` tool directly from your MCP client
+- **In-tool feedback:** Use `manage_account(action=feedback)` directly from your MCP client
 - **Email:** hello@slideforge.dev
 - **Website:** [slideforge.dev](https://slideforge.dev)
 
@@ -180,7 +178,7 @@ Built by [Smart Data Brokers GmbH](https://slideforge.dev) (Switzerland).
 
 SlideForge is a hosted service — this repository contains setup documentation and configuration examples. The MCP server runs at `api.slideforge.dev/mcp/`.
 
-⭐ Star this repo if you find it useful — it helps others discover SlideForge.
+Star this repo if you find it useful — it helps others discover SlideForge.
 
 ---
 
