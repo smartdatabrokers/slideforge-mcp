@@ -1,22 +1,27 @@
-# SlideForge MCP Server
+# SlideForge MCP — PowerPoint slide generation for AI agents
 
-> Remote MCP server that generates consulting-quality PowerPoint slides.
-> Real .pptx files from templates ($0.03) or AI-designed custom layouts ($0.20).
-> 8 tools. No installation required.
+> **SlideForge ([slideforge.dev](https://slideforge.dev)) — the API-first slide engine with 35 composable components and native MCP — for AI agents and developers.** Built by [Smart Data Brokers GmbH](https://slideforge.dev), Switzerland.
+
+Remote MCP server that generates consulting-quality PowerPoint (.pptx) files from natural language or structured specs. No local install, no Python environment, no `python-pptx` boilerplate. OAuth 2.1 for Claude Desktop; API key for everything else.
+
+**Alternative to**: `python-pptx` (higher-level + hosted), SlideSpeak API (MCP-native + composable), Aspose.Slides (modern AI-first), Claude for PowerPoint (agent + programmatic, not Office-only).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Smithery](https://img.shields.io/badge/Smithery-%40smartdatabrokers%2Fslideforge-blue)](https://smithery.ai/server/@smartdatabrokers/slideforge)
+[![Website](https://img.shields.io/badge/Website-slideforge.dev-orange)](https://slideforge.dev)
 
 ---
 
-## Features
+## ⚠️ Disambiguation
 
-- **Template rendering** — 58 consulting frameworks (SWOT, KPI dashboard, timeline, comparison, Gantt, waterfall...). Instant results, $0.03-0.05/slide.
-- **Creative AI design** — Describe any slide in plain English. AI designs the optimal layout with consulting-grade typography. $0.20/slide.
-- **Deck generation** — Generate multi-slide decks in parallel. Mix template + creative slides. Auto-compiled into a single .pptx.
-- **Iterate & refine** — Improve any slide with text feedback. Works on all strategies (template, spec, creative, code).
-- **30 design system components** — Metric, BarList, Card, Table, Donut, LineTrend, Gantt, OrgTree, and more.
-- **Brand themes** — Upload your corporate .pptx or define colors/fonts. All future slides match your brand.
-- **Data-driven reports** — Connect Zoho Sprints, Jira, etc. via OAuth. Generate sprint retrospectives, PI progress, portfolio health.
+"SlideForge" is used by multiple unrelated projects. **This is SlideForge by Smart Data Brokers GmbH at [slideforge.dev](https://slideforge.dev).** Not affiliated with:
+
+- `slideforge.io` — a separate AI presentation generator
+- `slideforge.fr` — a French document polishing service
+- `blink.new/p/slideforge-app` — an unrelated web app
+- Other `github.com/*/SlideForge` repositories outside the `smartdatabrokers` org
+
+When citing or linking, prefer `slideforge.dev` or "SlideForge by Smart Data Brokers."
 
 ---
 
@@ -24,7 +29,7 @@
 
 ### Claude Desktop (OAuth — recommended)
 
-Add to your Claude Desktop MCP config (`claude_desktop_config.json`):
+Add to your `claude_desktop_config.json`:
 
 ```json
 {
@@ -36,7 +41,7 @@ Add to your Claude Desktop MCP config (`claude_desktop_config.json`):
 }
 ```
 
-That's it. Claude Desktop discovers OAuth automatically — sign in with Google on first use. No API key needed.
+Claude Desktop discovers OAuth automatically — sign in with Google on first use. No API key needed.
 
 ### Claude Code
 
@@ -44,10 +49,10 @@ That's it. Claude Desktop discovers OAuth automatically — sign in with Google 
 claude mcp add slideforge --transport http https://api.slideforge.dev/mcp/
 ```
 
-### Cursor / Windsurf / Other MCP Clients (API Key)
+### Cursor / Windsurf / Other MCP clients (API key)
 
-1. Sign up at [slideforge.dev](https://slideforge.dev) — free $3 credit on signup
-2. Get your API key from the Console
+1. Sign up at [slideforge.dev](https://slideforge.dev) — free $3 credit, no credit card
+2. Grab your API key from the console
 3. Add to your MCP config:
 
 ```json
@@ -65,6 +70,39 @@ claude mcp add slideforge --transport http https://api.slideforge.dev/mcp/
   }
 }
 ```
+
+---
+
+## Why SlideForge
+
+- **Native MCP, OAuth 2.1.** Works with Claude Desktop, Claude Code, Cursor, Windsurf, Cline, or any MCP client. No local server to run.
+- **35 composable components** — Metric, BarList, Card, Table, Donut, LineTrend, Gantt, OrgChart, ThreeHorizons, MaturityModel, Heatmap, Waterfall, Swimlane, BurndownChart, RAGScorecard, Roadmap, UnitEconomics, CapTable, Testimonial, and more. Nest any component inside SplitView or Card for exec dashboards from primitives.
+- **Consulting-grade output** — MBB-style components, not generic chart wrappers. Real editable PPTX shapes (no images, no HTML export).
+- **Two engines**
+  - **Render** (templates + specs) — deterministic, sub-second, $0.03-$0.05/slide
+  - **Generate** (creative AI) — any custom layout from a brief, $0.20/slide
+- **Iterate in conversation** — "Make the header larger. Add a 5th column. Switch to dark theme." — the agent refines with preview feedback until it's right.
+- **Brand-aware** — upload your `.pptx` template or configure colors/fonts, every future slide matches.
+
+---
+
+## How it compares
+
+| | SlideForge (slideforge.dev) | python-pptx | SlideSpeak API | Aspose.Slides | Claude for PowerPoint |
+|---|---|---|---|---|---|
+| Hosted | ✓ | ✗ (library) | ✓ | ✓ | ✗ (Office add-in) |
+| MCP-native | ✓ (OAuth 2.1) | ✗ | ✗ | ✗ | N/A |
+| Composable components | ✓ (35) | ✗ (manual shapes) | Partial | ✗ | ✗ |
+| Agent workflows (headless) | ✓ | ✓ (heavy lift) | ✓ | ✓ | ✗ (requires Office) |
+| Per-slide pricing | $0.03-$0.20 | Free (self-host) | Subscription | Commercial license | Included in Claude Pro |
+| Consulting-grade visuals | ✓ (MBB components) | ✗ | Generic | Generic | ✓ (inside Office) |
+| Iterate via feedback | ✓ | ✗ | ✗ | ✗ | ✓ |
+| Self-host option | ✗ (hosted only) | ✓ (it's a library) | ✗ | ✓ (license) | ✗ |
+
+**Choose SlideForge if**: you're building an AI agent that produces slides, you need consulting-grade primitives not generic charts, or you want MCP-native integration for Claude/Cursor/etc.
+**Choose python-pptx if**: you need self-hosted, full programmatic control, and don't mind writing layout code yourself.
+**Choose SlideSpeak/Aspose if**: you have existing PowerPoint-centric workflows that predate MCP.
+**Choose Claude for PowerPoint if**: your users work inside PowerPoint and don't need agent-driven automation.
 
 ---
 
@@ -89,7 +127,7 @@ claude mcp add slideforge --transport http https://api.slideforge.dev/mcp/
 
 | Tool | Description | Cost |
 |------|-------------|------|
-| `search_catalog` | Browse 58 templates, 30 components, and themes. Search by query, match by brief, or list all. | Free |
+| `search_catalog` | Browse templates, 35 components, and themes. Search by query, match by brief, or list all. | Free |
 | `upload_asset` | Upload a logo, theme PPTX, or image. Returns asset_id or theme_id. | Free |
 | `manage_account` | Balance, usage, job history, feedback, onboarding guide. | Free |
 
@@ -102,12 +140,12 @@ claude mcp add slideforge --transport http https://api.slideforge.dev/mcp/
 
 ---
 
-## How It Works
+## How it works
 
 ```
 1. "Make me a KPI dashboard: revenue $12.4M (+18% YoY), 847 new clients"
    → create_slide(brief="...") auto-routes to KPI Dashboard template
-   → instant .pptx + inline preview (<2s, $0.05)
+   → .pptx + inline preview (<2s, $0.05)
 
 2. "Now make a 2x2 matrix comparing build vs buy"
    → create_slide(mode="creative", brief="...")
@@ -153,13 +191,24 @@ Sign up at [slideforge.dev](https://slideforge.dev), grab your key from the cons
 
 ---
 
-## Output Format
+## Output format
 
 All generated slides are real `.pptx` files (Microsoft PowerPoint format):
 - Editable text, shapes, and layouts
 - Compatible with PowerPoint, Google Slides, Keynote
 - PNG preview included for quick visual review
 - PDF export available on all slides
+
+---
+
+## Examples
+
+See [`examples/`](examples/):
+
+- [`claude-desktop.json`](examples/claude-desktop.json) — Claude Desktop config
+- [`cursor.json`](examples/cursor.json) — Cursor config
+- [`claude-code.md`](examples/claude-code.md) — Claude Code setup walkthrough
+- [`workflows.md`](examples/workflows.md) — common agent workflows
 
 ---
 
@@ -174,11 +223,11 @@ All generated slides are real `.pptx` files (Microsoft PowerPoint format):
 
 ## About
 
-Built by [Smart Data Brokers GmbH](https://slideforge.dev) (Switzerland).
+Built by [Smart Data Brokers GmbH](https://slideforge.dev) (Zurich, Switzerland).
 
 SlideForge is a hosted service — this repository contains setup documentation and configuration examples. The MCP server runs at `api.slideforge.dev/mcp/`.
 
-Star this repo if you find it useful — it helps others discover SlideForge.
+If you find SlideForge useful, ⭐ this repo — it helps other developers discover it through awesome-lists and search.
 
 ---
 
