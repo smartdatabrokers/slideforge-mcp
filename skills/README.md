@@ -1,54 +1,52 @@
 # SlideForge Skills
 
-Claude Agent Skills that guide Claude in using the [SlideForge MCP server](https://api.slideforge.dev/mcp/) for high-leverage workflows. Each skill is a standalone `SKILL.md` file with YAML frontmatter.
+Claude Agent Skills that mirror the core tools of the [SlideForge MCP server](https://api.slideforge.dev/mcp/). Each skill is a standalone `SKILL.md` file with YAML frontmatter — Claude auto-activates the matching one when the user's intent lines up.
 
 ## Skills
 
-| Skill | Purpose | MCP tools used |
+| Skill | Core tool | What it does |
 |---|---|---|
-| **[consulting-deck](consulting-deck/SKILL.md)** | Generate a consulting-grade multi-slide PowerPoint deck from a topic or brief, following MBB narrative conventions | `create_deck`, `create_slide`, `upload_asset` |
-| **[sprint-report](sprint-report/SKILL.md)** | Generate sprint retrospective, executive snapshot, PI progress, or portfolio health reports from live Zoho Sprints, Jira, Linear, or Azure DevOps data | `manage_connections`, `generate_report`, `create_slide` |
+| **[create-slide](create-slide/SKILL.md)** | `create_slide` / `create_deck` | Turn a brief into a single slide, or a list of briefs into a deck |
+| **[translate-pptx](translate-pptx/SKILL.md)** | `translate_deck` | Translate a PPTX into one of 8 languages, preserving formatting |
+| **[pdf-to-pptx](pdf-to-pptx/SKILL.md)** | `upload_asset` (purpose=pdf) | Convert a PDF into an editable PPTX (vector extraction, ~18s for 112 pages) |
 
 ## Installation
 
-Claude Desktop and Claude Code auto-discover skills placed in standard locations:
+Claude Desktop and Claude Code auto-discover skills in standard locations:
 
 | Scope | Path |
 |---|---|
 | Personal (all projects) | `~/.claude/skills/` |
 | Project (this repo only) | `.claude/skills/` |
 
-To use these skills:
-
 ```bash
-# Personal install
+# Personal install — all three skills
 mkdir -p ~/.claude/skills
-cp -r consulting-deck sprint-report ~/.claude/skills/
+cp -r create-slide translate-pptx pdf-to-pptx ~/.claude/skills/
 
-# Project install (from inside your project repo)
+# Or project-scoped (from inside your project repo)
 mkdir -p .claude/skills
-cp -r consulting-deck sprint-report .claude/skills/
+cp -r create-slide translate-pptx pdf-to-pptx .claude/skills/
 ```
 
-Restart Claude Desktop or reload Claude Code. The skills will activate automatically when Claude determines the user's request matches their `description` fields.
+Restart Claude Desktop or reload Claude Code. Each skill activates automatically when the user's request matches its `description`.
 
 ## Prerequisites
 
-Both skills require the `slideforge` MCP server to be connected to Claude Desktop:
+All three skills need the `slideforge` MCP server connected:
 
 1. Claude Desktop → Settings → Connectors → Add
 2. Server URL: `https://api.slideforge.dev/mcp/`
-3. OAuth via Google sign-in — free $3 wallet on signup
+3. Sign in with Google / GitHub / email — free $3 wallet on signup
 
-Detailed setup: [slideforge.dev/docs/mcp](https://slideforge.dev/docs/mcp)
+Setup walkthrough: [slideforge.dev/docs/mcp](https://slideforge.dev/docs/mcp)
 
 ## License
 
-MIT — same as the parent repository. Copy, adapt, and ship your own skills on top.
+MIT — copy, adapt, and ship your own skills on top.
 
 ## Related
 
 - **MCP server:** this repo — [smartdatabrokers/slideforge-mcp](https://github.com/smartdatabrokers/slideforge-mcp)
 - **Hosted service:** [slideforge.dev](https://slideforge.dev)
-- **Component reference:** [slideforge.dev/guides/slideforge-component-reference](https://slideforge.dev/guides/slideforge-component-reference)
-- **Case studies:** [slideforge.dev/case-studies](https://slideforge.dev/case-studies)
+- **Free public tools:** [slideforge.dev/tools/pdf-to-pptx](https://slideforge.dev/tools/pdf-to-pptx) (no signup, rate-limited)
