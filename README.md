@@ -197,7 +197,6 @@ All generated slides are real `.pptx` files (Microsoft PowerPoint format):
 - Editable text, shapes, and layouts
 - Compatible with PowerPoint, Google Slides, Keynote
 - PNG preview included for quick visual review
-- PDF export available on all slides
 
 ---
 
@@ -216,7 +215,7 @@ See [`examples/`](examples/):
 
 - **GitHub Issues:** [Report setup problems or bugs](https://github.com/smartdatabrokers/slideforge-mcp/issues)
 - **In-tool feedback:** Use `manage_account(action=feedback)` directly from your MCP client
-- **Email:** hello@slideforge.dev
+- **Email:** contact@slideforge.dev
 - **Website:** [slideforge.dev](https://slideforge.dev)
 
 ---

@@ -44,7 +44,7 @@ This is a remote MCP server. No local installation required.
 - 8 tools + 2 guided workflow prompts
 - `create_slide` — auto-routes briefs to templates or AI (6 modes)
 - `create_deck` — multi-slide parallel generation + assembly
-- `search_catalog` — 58 templates, 30 components, themes
+- `search_catalog` — 58 templates, 35 components, themes
 - `translate_deck` — PPTX translation (8 languages)
 - `generate_report` — data-driven reports from connected tools
 - `manage_connections` — OAuth connections (Zoho, Jira, etc.)
