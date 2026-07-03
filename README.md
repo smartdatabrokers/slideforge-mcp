@@ -95,7 +95,7 @@ Full REST reference: [slideforge.dev/docs/api](https://slideforge.dev/docs/api)
 
 ---
 
-## The 9 MCP tools
+## The 7 MCP tools
 
 | Tool | What it does | Cost |
 |---|---|---|
@@ -105,11 +105,11 @@ Full REST reference: [slideforge.dev/docs/api](https://slideforge.dev/docs/api)
 | `browse_catalog` | 150+ patterns with per-form JSON Schemas + copy-pasteable example intents, themes, the code-mode widget toolkit. | Free |
 | `translate_deck` | Translate any PPTX preserving formatting (8 languages). | $0.02/slide |
 | `upload_asset` | Logos, theme PPTX, images; `purpose=pdf` extracts a PDF into editable slide intents; or AI-generate an image. | Free / $0.01/page / $0.05/image |
-| `generate_report` | Data-driven multi-slide report from a connected tool (e.g. Zoho Sprints). | Per-slide |
-| `manage_connections` | OAuth connections for data-driven reports. | Free |
 | `manage_account` | Balance, usage, jobs, security status, feedback. | Free |
 
 `dry_run: true` on create tools = validation + fidelity forecast at $0.
+
+Two more tools (`generate_report`, `manage_connections` — data-driven reports from connected tools like Zoho Sprints) exist behind an enterprise gate and are not served by default.
 
 **Also on REST (for now): the Deck Doctor.** `POST /v1/inspect` — a free deterministic Deck Quality Report for **any** pptx (overflow via real font metrics, content hidden behind shapes, off-canvas leftovers, WCAG contrast). `POST /v1/repair` — deterministic fixes, never your words, $0.02/repaired slide, free dry-run quote. [Docs](https://slideforge.dev/docs/api/inspect)
 

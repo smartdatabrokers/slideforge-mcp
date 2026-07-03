@@ -5,7 +5,7 @@
 The v5 surface (the engine consolidation shipped on the service earlier this year, now
 reflected here):
 
-- **9 tools** — `browse_catalog` replaces `search_catalog`; `create_slide` is intent-first
+- **7 served tools** (+2 enterprise-gated) — `browse_catalog` replaces `search_catalog`; `create_slide` is intent-first
   (form + typed fields bind verbatim; `mode=code` remains); the creative/iterate/template
   modes and per-mode pricing are gone. One price: $0.05/slide, usable-or-free.
 - **Fidelity manifest** on every response (verbatim | mixed | ai_completed) — the honesty layer.

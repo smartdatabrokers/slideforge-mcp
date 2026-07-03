@@ -6,7 +6,7 @@
 claude mcp add --transport http slideforge https://api.slideforge.dev/mcp/
 ```
 
-Verify: `claude mcp list` → `slideforge` with 9 tools.
+Verify: `claude mcp list` → `slideforge` with 7 tools.
 
 Optional — skills + server config as a plugin:
 

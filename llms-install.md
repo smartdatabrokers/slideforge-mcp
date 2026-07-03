@@ -41,14 +41,13 @@ This is a remote MCP server. No local installation required.
 
 ## Capabilities
 
-- 9 tools + guided workflow prompts
+- 7 tools + guided workflow prompts (2 more enterprise-gated: generate_report, manage_connections)
 - `create_slide` — structured intent (form + typed fields, binds verbatim) or brief; `mode=code` for sandboxed python-pptx; every response carries a fidelity manifest
 - `create_deck` — multi-slide parallel render into one merged .pptx (failed slides isolated + free)
 - `plan_slide` — brief → ranked form/variant candidates (free)
 - `browse_catalog` — 150+ patterns with JSON Schemas + example intents, themes, code-mode widgets (free)
 - `translate_deck` — PPTX translation, 8 languages, formatting preserved ($0.02/slide)
 - `upload_asset` — logos, themes, images; `purpose=pdf` extracts PDFs into editable intents
-- `generate_report` / `manage_connections` — data-driven reports from connected tools
 - `manage_account` — balance, usage, jobs, feedback (free)
 - REST-only: free `POST /v1/inspect` (Deck Quality Report for any pptx) + `POST /v1/repair`
 
