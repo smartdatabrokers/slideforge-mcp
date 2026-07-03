@@ -1,52 +1,32 @@
 # SlideForge Skills
 
-Claude Agent Skills that mirror the core tools of the [SlideForge MCP server](https://api.slideforge.dev/mcp/). Each skill is a standalone `SKILL.md` file with YAML frontmatter — Claude auto-activates the matching one when the user's intent lines up.
+Agent skills ([SKILL.md standard](https://agentskills.io)) that teach an agent to use
+[SlideForge](https://slideforge.dev) well — Claude Code, GitHub Copilot, Cursor, Codex and
+friends. Each is a standalone folder; the agent auto-activates the matching one.
 
-## Skills
-
-| Skill | Core tool | What it does |
+| Skill | Surface | What it does |
 |---|---|---|
-| **[create-slide](create-slide/SKILL.md)** | `create_slide` / `create_deck` | Turn a brief into a single slide, or a list of briefs into a deck |
-| **[translate-pptx](translate-pptx/SKILL.md)** | `translate_deck` | Translate a PPTX into one of 8 languages, preserving formatting |
-| **[pdf-to-pptx](pdf-to-pptx/SKILL.md)** | `upload_asset` (purpose=pdf) | Convert a PDF into an editable PPTX (vector extraction, ~18s for 112 pages) |
+| **[create-slide](create-slide/SKILL.md)** | `create_slide` / `create_deck` / `browse_catalog` (MCP) | Intent-first slides & decks: schema discovery, dry-run, fidelity manifest, headless preview |
+| **[inspect-repair](inspect-repair/SKILL.md)** | `POST /v1/inspect` + `/v1/repair` (REST) | Free Deck Quality Report on ANY pptx + deterministic repair (never alters words) |
+| **[translate-pptx](translate-pptx/SKILL.md)** | `translate_deck` (MCP) | Translate a PPTX into 8 languages, formatting preserved |
+| **[pdf-to-pptx](pdf-to-pptx/SKILL.md)** | `upload_asset purpose=pdf` (MCP) | Convert a PDF into an editable PPTX |
 
-## Installation
+## Install
 
-Claude Desktop and Claude Code auto-discover skills in standard locations:
+**Copy (any agent):**
 
 | Scope | Path |
 |---|---|
-| Personal (all projects) | `~/.claude/skills/` |
-| Project (this repo only) | `.claude/skills/` |
+| Personal (all projects) | `~/.claude/skills/<skill-name>/` |
+| Project | `.claude/skills/<skill-name>/` |
 
-```bash
-# Personal install — all three skills
-mkdir -p ~/.claude/skills
-cp -r create-slide translate-pptx pdf-to-pptx ~/.claude/skills/
+**Claude Code plugin (skills + MCP server config in one):**
 
-# Or project-scoped (from inside your project repo)
-mkdir -p .claude/skills
-cp -r create-slide translate-pptx pdf-to-pptx .claude/skills/
+```
+/plugin marketplace add smartdatabrokers/slideforge-mcp
+/plugin install slideforge@slideforge-mcp
 ```
 
-Restart Claude Desktop or reload Claude Code. Each skill activates automatically when the user's request matches its `description`.
-
-## Prerequisites
-
-All three skills need the `slideforge` MCP server connected:
-
-1. Claude Desktop → Settings → Connectors → Add
-2. Server URL: `https://api.slideforge.dev/mcp/`
-3. Sign in with Google / GitHub / email — free $3 wallet on signup
-
-Setup walkthrough: [slideforge.dev/docs/mcp](https://slideforge.dev/docs/mcp)
-
-## License
-
-MIT — copy, adapt, and ship your own skills on top.
-
-## Related
-
-- **MCP server:** this repo — [smartdatabrokers/slideforge-mcp](https://github.com/smartdatabrokers/slideforge-mcp)
-- **Hosted service:** [slideforge.dev](https://slideforge.dev)
-- **Free public tools:** [slideforge.dev/tools/pdf-to-pptx](https://slideforge.dev/tools/pdf-to-pptx) (no signup, rate-limited)
+The MCP-based skills need the server connected: `claude mcp add --transport http slideforge
+https://api.slideforge.dev/mcp/` (the plugin bundles this via `.mcp.json`). The REST-based
+inspect-repair skill needs only an API key from [slideforge.dev](https://slideforge.dev).

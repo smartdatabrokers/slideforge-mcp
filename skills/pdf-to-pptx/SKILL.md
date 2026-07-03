@@ -74,7 +74,7 @@ Authenticated flow: free — included as part of `upload_asset` with `purpose=pd
 ## Anti-patterns
 
 - Don't claim the converter works on image-only PDFs without OCR; it will produce page-sized background images with no editable text.
-- Don't re-run the conversion just to change a theme; the output is raw-extracted. If the user wants restyling, use `create_deck` with `mode=fork` on the output.
+- Don't re-run the conversion just to change a theme; the output is raw-extracted. If the user wants restyling, re-render the extracted intents via `create_deck` with a `theme_id`.
 - Don't suggest the free public tool for users with >15-page PDFs or >25 MB files — they'll hit the cap and bounce.
 
 ## References

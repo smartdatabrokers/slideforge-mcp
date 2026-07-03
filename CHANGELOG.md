@@ -1,5 +1,21 @@
 # Changelog
 
+## 5.0.0 — 2026-07-03
+
+The v5 surface (the engine consolidation shipped on the service earlier this year, now
+reflected here):
+
+- **9 tools** — `browse_catalog` replaces `search_catalog`; `create_slide` is intent-first
+  (form + typed fields bind verbatim; `mode=code` remains); the creative/iterate/template
+  modes and per-mode pricing are gone. One price: $0.05/slide, usable-or-free.
+- **Fidelity manifest** on every response (verbatim | mixed | ai_completed) — the honesty layer.
+- **Deck Doctor**: free `POST /v1/inspect` (Deck Quality Report for any pptx) +
+  `POST /v1/repair` ($0.02/repaired slide, never alters words). New `inspect-repair` skill.
+- **Plugin marketplace**: `/plugin marketplace add smartdatabrokers/slideforge-mcp` installs
+  skills + the MCP server config (`.claude-plugin/`, `.mcp.json`).
+- **AGENTS.md** (portable, agents.md standard) + **CLAUDE.md** for agent-native onboarding.
+- Skills rewritten for the current surface; README/llms-install/examples refreshed.
+
 All notable changes to the SlideForge MCP server.
 
 ## [4.0.1] — 2026-04-22

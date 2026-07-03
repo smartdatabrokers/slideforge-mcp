@@ -1,0 +1,22 @@
+{
+  "name": "slideforge-mcp",
+  "owner": {
+    "name": "Smart Data Brokers GmbH",
+    "email": "hello@slideforge.dev"
+  },
+  "metadata": {
+    "description": "Official SlideForge plugins — deterministic PowerPoint generation for AI agents (slideforge.dev)",
+    "version": "5.0.0"
+  },
+  "plugins": [
+    {
+      "name": "slideforge",
+      "description": "SlideForge remote MCP server config + skills: create editable .pptx from typed intents (fidelity manifest, usable-or-free), inspect/repair any deck, translate, PDF extract.",
+      "version": "5.0.0",
+      "source": {
+        "source": "github",
+        "repo": "smartdatabrokers/slideforge-mcp"
+      }
+    }
+  ]
+}

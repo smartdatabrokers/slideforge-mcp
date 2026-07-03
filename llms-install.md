@@ -41,12 +41,16 @@ This is a remote MCP server. No local installation required.
 
 ## Capabilities
 
-- 8 tools + 2 guided workflow prompts
-- `create_slide` — auto-routes briefs to templates or AI (6 modes)
-- `create_deck` — multi-slide parallel generation + assembly
-- `search_catalog` — 58 templates, 35 components, themes
-- `translate_deck` — PPTX translation (8 languages)
-- `generate_report` — data-driven reports from connected tools
-- `manage_connections` — OAuth connections (Zoho, Jira, etc.)
-- `upload_asset` — logos, themes, images
-- `manage_account` — balance, usage, jobs, feedback
+- 9 tools + guided workflow prompts
+- `create_slide` — structured intent (form + typed fields, binds verbatim) or brief; `mode=code` for sandboxed python-pptx; every response carries a fidelity manifest
+- `create_deck` — multi-slide parallel render into one merged .pptx (failed slides isolated + free)
+- `plan_slide` — brief → ranked form/variant candidates (free)
+- `browse_catalog` — 150+ patterns with JSON Schemas + example intents, themes, code-mode widgets (free)
+- `translate_deck` — PPTX translation, 8 languages, formatting preserved ($0.02/slide)
+- `upload_asset` — logos, themes, images; `purpose=pdf` extracts PDFs into editable intents
+- `generate_report` / `manage_connections` — data-driven reports from connected tools
+- `manage_account` — balance, usage, jobs, feedback (free)
+- REST-only: free `POST /v1/inspect` (Deck Quality Report for any pptx) + `POST /v1/repair`
+
+Pricing: creating a slide $0.05 · transforming $0.02 (translate, repair) · checking free
+(dry_run, plan, inspect). 60 free slides on signup. Machine-readable: GET /v1/pricing

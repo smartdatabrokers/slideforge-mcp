@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "slideforge": {
+      "type": "http",
+      "url": "https://api.slideforge.dev/mcp/"
+    }
+  }
+}
