@@ -45,7 +45,11 @@ Or include a preview inline by setting `include_preview: "default"` in the uploa
 
 ### 3. Deliver
 
-The response includes a `download_url` (HMAC-signed, 1-hour expiry). The output is a real `.pptx` — every shape, text block, and image is individually editable in PowerPoint.
+Download via header-auth: `GET /v1/jobs/<job_id>/pptx` with
+`Authorization: Bearer sf_live_YOUR_KEY` (ownership-checked). To hand off a shareable link
+instead, `POST /v1/jobs/<job_id>/download-url` mints a short-TTL, single-use, revocable one.
+The output is a real `.pptx` — every shape, text block, and image is individually editable in
+PowerPoint.
 
 ## What gets extracted cleanly
 
@@ -82,4 +86,3 @@ Authenticated flow: free — included as part of `upload_asset` with `purpose=pd
 - MCP server: `https://api.slideforge.dev/mcp/`
 - Docs: `https://slideforge.dev/docs/mcp`
 - Free public tool: `https://slideforge.dev/tools/pdf-to-pptx`
-- Extraction engine spec: `docs/specs/18-pdf-extraction.md`

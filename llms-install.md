@@ -46,9 +46,9 @@ This is a remote MCP server. No local installation required.
 - `create_deck` — multi-slide parallel render into one merged .pptx (failed slides isolated + free)
 - `plan_slide` — brief → ranked form/variant candidates (free)
 - `browse_catalog` — 150+ patterns with JSON Schemas + example intents, themes, code-mode widgets (free)
-- `translate_deck` — PPTX translation, 8 languages, formatting preserved ($0.02/slide)
+- `translate_deck` — PPTX translation, 32 languages, formatting preserved ($0.02/slide)
 - `upload_asset` — logos, themes, images; `purpose=pdf` extracts PDFs into editable intents
-- `manage_account` — balance, usage, jobs, feedback (free)
+- `manage_account` — balance, usage, jobs, feedback, security status (free)
 - REST-only: free `POST /v1/inspect` (Deck Quality Report for any pptx) + `POST /v1/repair`
 
 Pricing: creating a slide $0.05 · transforming $0.02 (translate, repair) · checking free

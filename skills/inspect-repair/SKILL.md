@@ -54,7 +54,7 @@ Actions (subset via `actions[]`, default all): `shrink_to_fit` (measured, floor 
 `fix_contrast` (WCAG AA, hue-preserving). **No characters are ever altered** — the response
 carries a computed `visible_text_untouched` proof, a before/after report diff, and
 `flagged_not_fixed[]` for anything ambiguous (with remedies). A run that fixes nothing bills
-nothing; the repaired deck comes back as signed `pptx_url` + preview.
+nothing; the repaired deck persists as a job — download it with your API key via `GET /v1/jobs/{id}/pptx`.
 
 ## Workflow patterns
 

@@ -19,8 +19,21 @@ $0.05/slide create, $0.02/slide transform, checks free.
 ## 2. Brand it
 
 ```
-→ upload_asset(purpose="theme", file=<corporate.pptx>)   # returns theme_id, free
-→ create_deck(slides=[...], theme_id="thm_...")           # every slide on-brand
+→ upload_asset(purpose="theme", data=<base64 corporate.pptx>)   # returns theme_id, free
+  Big file? Omit `data` — the result card shows a drag/drop zone; bytes never pass through the agent.
+→ create_deck(slides=[...], theme_id="thm_...")                  # every slide on-brand
+  Uploaded themes render NATIVE by default — the deck is built ON the client's own template
+  file (master, layouts, fonts intact). Response: brand_fidelity_level: "native".
+```
+
+## 2b. Fill the template's own designed slides (cover, agenda, dividers)
+
+```
+→ browse_catalog(type="themes", theme_id="thm_...")
+  Lists the template's OWN layouts (cover, agenda, section_divider, closing) + fill schemas
+→ create_slide(form="template_layout", theme_id="thm_...",
+                data={"layout": "cover", "fills": {"title": "...", "subtitle": "..."}})
+  Fills the template's designed slide literally — deterministic, LLM-free, verbatim
 ```
 
 ## 3. Pre-send QA on ANY deck (free)
@@ -36,7 +49,7 @@ $0.05/slide create, $0.02/slide transform, checks free.
 ## 4. PDF → editable deck
 
 ```
-→ upload_asset(purpose="pdf", file=<report.pdf>)          # $0.01/page: editable intents
+→ upload_asset(purpose="pdf", data=<base64 report.pdf>)   # $0.01/page: editable intents
 → create_deck(slides=<extracted intents>)                 # render editable pptx
 → POST /v1/inspect on the result                          # free fidelity check
 ```
@@ -50,7 +63,12 @@ $0.05/slide create, $0.02/slide transform, checks free.
 ## 6. Self-review loop (headless clients)
 
 ```
-→ create_slide(...)                     # returns preview_url + pptx_url
-→ curl -o preview.png <preview_url>     # the agent LOOKS at its own render
+→ create_slide(...)                                    # preview PNG is embedded INLINE in
+                                                        # the tool result — the agent LOOKS at
+                                                        # its own render directly, no fetch
 → fix the intent where needed → re-render (changed input: $0.05; identical: free)
+→ curl -H "Authorization: Bearer sf_live_KEY" \
+    -o deck.pptx https://api.slideforge.dev/v1/jobs/<job_id>/pptx   # deliverable, ownership-checked
+→ POST /v1/jobs/<job_id>/download-url                  # mint a short-TTL single-use link to
+                                                        # hand off, if the caller needs a URL
 ```

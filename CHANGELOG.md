@@ -1,5 +1,28 @@
 # Changelog
 
+All notable changes to the SlideForge MCP server.
+
+## 5.1.0 — 2026-07-08
+
+- **Native brand-template rendering**: `upload_asset(purpose="theme", data=<base64 .pptx>)`
+  renders NATIVE by default — the output deck is built ON the client's own template file
+  (master, layouts, fonts intact), not a color-matched imitation. Responses carry
+  `brand_fidelity_level: "native"`.
+- **Drag/drop theme upload**: omit `data` on a large theme file and the result card shows a
+  drop zone — bytes never pass through the agent.
+- **Branded furniture layouts**: `create_slide(form="template_layout", theme_id=..., data=...)`
+  fills the template's own designed cover/agenda/section-divider/closing slides verbatim,
+  deterministic and LLM-free. Discoverable via `browse_catalog(type="themes", theme_id=...)`.
+- **Translation: 8 → 32 languages** (Latin, Cyrillic, and Greek scripts; no CJK/RTL yet), both
+  REST and MCP.
+- **Security hardening**: tool result bodies are now credential-free (no signed URLs); the
+  .pptx downloads via header-auth (`Authorization: Bearer` + ownership check);
+  `POST /v1/jobs/<job_id>/download-url` mints a short-TTL single-use handoff link; artifacts
+  auto-delete after 30 days; every download is audit-logged;
+  `manage_account(action=security_status)` discloses the full posture in-band.
+- **New fidelity grade `partial`**: some supplied content did not make it onto the slide; the
+  manifest names what was dropped.
+
 ## 5.0.0 — 2026-07-03
 
 The v5 surface (the engine consolidation shipped on the service earlier this year, now
@@ -15,8 +38,6 @@ reflected here):
   skills + the MCP server config (`.claude-plugin/`, `.mcp.json`).
 - **AGENTS.md** (portable, agents.md standard) + **CLAUDE.md** for agent-native onboarding.
 - Skills rewritten for the current surface; README/llms-install/examples refreshed.
-
-All notable changes to the SlideForge MCP server.
 
 ## [4.0.1] — 2026-04-22
 
@@ -98,7 +119,7 @@ All notable changes to the SlideForge MCP server.
 - 2 MCP prompts: `create_presentation`, `quick_slide`
 - OAuth 2.1 authentication (Claude Desktop native)
 - API key authentication (all MCP clients)
-- 39 built-in consulting templates (now 58)
+- 39 built-in consulting templates
 - Custom brand themes
 - Inline PNG preview
-- $3 free trial on signup
+- Free trial on signup (today: 60 free slides)

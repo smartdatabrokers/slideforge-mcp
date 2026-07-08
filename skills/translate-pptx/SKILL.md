@@ -1,6 +1,6 @@
 ---
 name: translate-pptx
-description: "Translate a PowerPoint (.pptx) deck into another language while preserving all formatting, layouts, charts, tables, and embedded media. Use when the user asks to translate a deck, localize a presentation, convert a PPTX to German/French/Spanish/etc., or similar. Supports 8 languages (en, de, fr, es, it, pt, nl, pl). Requires the slideforge MCP server."
+description: "Translate a PowerPoint (.pptx) deck into another language while preserving all formatting, layouts, charts, tables, and embedded media. Use when the user asks to translate a deck, localize a presentation, convert a PPTX to German/French/Spanish/etc., or similar. Supports 32 languages across Latin, Cyrillic, and Greek scripts (no CJK/RTL yet). Requires the slideforge MCP server."
 ---
 
 # Translate PPTX
@@ -57,18 +57,19 @@ Returns a `job_id`; poll or set `include_preview` to get the result inline.
 
 ## Supported languages
 
-| Code | Language |
-|---|---|
-| en | English |
-| de | German |
-| fr | French |
-| es | Spanish |
-| it | Italian |
-| pt | Portuguese |
-| nl | Dutch |
-| pl | Polish |
+32 languages, grouped by script family. `source_language` is auto-detected by default; override
+if needed. No CJK or RTL scripts yet.
 
-`source_language` is auto-detected by default; override if needed.
+| Script | Codes |
+|---|---|
+| Latin | en, de, fr, es, it, pt, nl, sv, da, no, fi, is, pl, cs, sk, hu, ro, hr, sl, et, lt, lv, tr, ca, gl, id, vi |
+| Cyrillic | ru, uk, bg, sr |
+| Greek | el |
+
+Full names: English, German, French, Spanish, Italian, Portuguese, Dutch, Swedish, Danish,
+Norwegian, Finnish, Icelandic, Polish, Czech, Slovak, Hungarian, Romanian, Croatian, Slovenian,
+Estonian, Lithuanian, Latvian, Russian, Ukrainian, Bulgarian, Serbian, Turkish, Catalan,
+Galician, Indonesian, Vietnamese, Greek.
 
 ## Useful options
 
@@ -82,7 +83,11 @@ $0.02 per slide. A 20-slide deck = $0.40. 100-slide deck = $2.00.
 
 ## Delivery
 
-The response includes a `download_url` (HMAC-signed, 1-hour expiry). The file is a real, editable `.pptx` — every translated element stays as a native PowerPoint shape.
+Download the file via header-auth: `GET /v1/jobs/<job_id>/pptx` with
+`Authorization: Bearer sf_live_YOUR_KEY` (ownership-checked). To hand off a shareable link
+instead, `POST /v1/jobs/<job_id>/download-url` mints a short-TTL, single-use, revocable one.
+The file is a real, editable `.pptx` — every translated element stays as a native PowerPoint
+shape.
 
 ## Anti-patterns
 

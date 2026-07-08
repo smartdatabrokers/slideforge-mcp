@@ -1,6 +1,6 @@
 {
   "name": "slideforge",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Official SlideForge integration: remote MCP server (streamable-http, OAuth or API key) + agent skills for slide/deck creation, deck inspect & repair, translation, and PDF extraction.",
   "author": {
     "name": "Smart Data Brokers GmbH",

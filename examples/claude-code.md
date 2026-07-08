@@ -26,17 +26,17 @@ Optional — skills + server config as a plugin:
 
 ## The headless self-review loop
 
-There are no inline widgets in a terminal — the response JSON carries signed URLs. The agent
-can *look at its own render* and fix it:
+There are no inline widgets in a terminal, but the tool result embeds the preview PNG inline —
+the agent can *look at its own render* directly out of the response and fix it:
 
 ```
 1. create_slide(form=..., data=..., dry_run=true)   # free validation + fidelity forecast
-2. create_slide(form=..., data=...)                  # $0.05 → preview_url + pptx_url
-3. curl -o preview.png "<preview_url>"               # download the PNG
-4. (view preview.png)                                # spot the issue on slide
-5. fix the intent → re-render                        # identical input would be free;
+2. create_slide(form=..., data=...)                  # $0.05 → inline preview PNG in the result
+3. (view the inline preview)                         # spot the issue on slide
+4. fix the intent → re-render                        # identical input would be free;
                                                      # a changed intent is a fresh $0.05
-6. curl -o slide.pptx "<pptx_url>"                   # deliverable
+5. curl -H "Authorization: Bearer sf_live_YOUR_KEY" \
+     -o slide.pptx https://api.slideforge.dev/v1/jobs/<job_id>/pptx   # deliverable
 ```
 
 Read the **fidelity manifest** in every response: `verbatim` means every number came from your

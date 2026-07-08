@@ -8,7 +8,7 @@ friends. Each is a standalone folder; the agent auto-activates the matching one.
 |---|---|---|
 | **[create-slide](create-slide/SKILL.md)** | `create_slide` / `create_deck` / `browse_catalog` (MCP) | Intent-first slides & decks: schema discovery, dry-run, fidelity manifest, headless preview |
 | **[inspect-repair](inspect-repair/SKILL.md)** | `POST /v1/inspect` + `/v1/repair` (REST) | Free Deck Quality Report on ANY pptx + deterministic repair (never alters words) |
-| **[translate-pptx](translate-pptx/SKILL.md)** | `translate_deck` (MCP) | Translate a PPTX into 8 languages, formatting preserved |
+| **[translate-pptx](translate-pptx/SKILL.md)** | `translate_deck` (MCP) | Translate a PPTX into 32 languages, formatting preserved |
 | **[pdf-to-pptx](pdf-to-pptx/SKILL.md)** | `upload_asset purpose=pdf` (MCP) | Convert a PDF into an editable PPTX |
 
 ## Install

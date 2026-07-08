@@ -24,8 +24,8 @@ usable-or-free; identical input re-renders free.
 3. **Dry-run.** Send the intent with `dry_run: true` → `status: validated` + a
    `fidelity_forecast` at $0. If `errors[]` come back, each carries a machine `code` and a
    `remedy` — fix and re-dry-run. Never pay to discover a validation error.
-4. **Render.** Same payload without `dry_run`. The response includes `preview_url` (PNG),
-   `pptx_url` (editable file), cost, and the **fidelity manifest**.
+4. **Render.** Same payload without `dry_run`. The response embeds a preview PNG inline, cost,
+   and the **fidelity manifest**. The editable file downloads separately (see below).
 
 For a whole deck: ONE `create_deck` call with `slides[]` (a list of create_slide intents).
 Parallel render, one merged pptx, per-slide fidelity rollup; failed slides are isolated and free.
@@ -41,6 +41,9 @@ always prefer typed fields.
 - `fidelity: verbatim` — every word/number came from the user's input. Say so.
 - `fidelity: mixed / ai_completed` — the manifest names which fields a model completed.
   Tell the user which parts to double-check.
+- `fidelity: partial` — some supplied content did not make it onto the slide. The manifest
+  names what was dropped. Never deliver a `partial` render without telling the user what's
+  missing.
 - `status: completed_with_errors` — the render is flawed and was NOT billed. Read the error
   remedies, fix the intent, re-render. Do not deliver the artifact as if it were fine.
 - `warnings[]` — quality advisories (density, contrast, overflow) with remedies; the slide
@@ -48,11 +51,12 @@ always prefer typed fields.
 
 ## Headless verification (Claude Code / Codex CLI — no widgets)
 
-Always look at your own render before declaring done:
+The preview PNG is embedded inline in the tool result — read it directly, no fetch needed.
+Always look at your own render before declaring done. Download the deliverable via header-auth:
 
 ```bash
-curl -o preview.png "<preview_url>"   # then view the PNG
-curl -o slide.pptx "<pptx_url>"
+curl -H "Authorization: Bearer sf_live_YOUR_KEY" \
+  -o slide.pptx https://api.slideforge.dev/v1/jobs/<job_id>/pptx   # ownership-checked
 ```
 
 If the preview shows a problem, fix the intent and re-render — refinement is a fresh $0.05
@@ -69,4 +73,8 @@ board-grade widget + chart toolkit so you don't hand-roll primitives.
 - DO put real content in `data.*` typed fields; DON'T paste it into a brief when it matters.
 - DO fix errors by their `remedy`; DON'T retry an identical failed payload.
 - DO use one `create_deck` for multi-slide; DON'T loop `create_slide`.
-- DO pass `theme_id` (or upload a theme PPTX via `upload_asset`) for branding.
+- DO pass `theme_id` (or upload a theme PPTX via `upload_asset(purpose="theme", data=<base64>)`)
+  for branding — uploaded themes render NATIVE by default, built ON the client's own template
+  file (master, layouts, fonts).
+- DO use `create_slide(form="template_layout", theme_id=..., data={"layout": ..., "fills": ...})`
+  to fill the template's own designed cover/agenda/divider slides verbatim.

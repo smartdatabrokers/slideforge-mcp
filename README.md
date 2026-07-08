@@ -27,10 +27,12 @@ When citing or linking, prefer `slideforge.dev` or "SlideForge by Smart Data Bro
 ## Why SlideForge
 
 - **A compiler, not a generator.** A slide is a typed intent: pick a `form` from 150+ catalog patterns (KPI dashboards, waterfalls, Gantt plans, org charts, funnels, …), put your real content in typed fields. A deterministic engine lays it out — **no LLM in the render path**, same input → same slide, sub-second.
-- **The honesty layer.** Every response carries a **fidelity manifest**: per field, was your content bound `verbatim`, `mixed`, or `ai_completed`? Slides with blocking defects don't bill (**usable-or-free**). If your agent feeds numbers into slides, this is what makes the output auditable.
+- **The honesty layer.** Every response carries a **fidelity manifest**: per field, was your content bound `verbatim`, `mixed`, or `ai_completed`? A `partial` grade means some supplied content didn't make it onto the slide — the manifest names what was dropped; never deliver a `partial` render without telling the user what's missing. Slides with blocking defects don't bill (**usable-or-free**). If your agent feeds numbers into slides, this is what makes the output auditable.
 - **Native, editable .pptx.** Real shapes and text boxes — not images, not HTML exports. Openable and editable in PowerPoint.
 - **Escape hatch included.** `mode=code` runs your own python-pptx in a sandbox (with a widget/chart toolkit) when the catalog can't express your layout.
+- **Your template, natively.** Upload your company's .pptx — slides are built ON your file (theme, masters, fonts), not a color-matched imitation.
 - **Check for free.** `dry_run` validates any payload + forecasts fidelity at $0. Free deck inspect (`POST /v1/inspect`) runs a deterministic quality report on **any** pptx.
+- **97% quality parity with Gamma** in our own blind side-by-side benchmark (internal instrument, not third-party).
 
 **Pricing in one breath: creating a slide 5¢ · transforming a slide 2¢ (translate, repair) · checking free.** 60 free slides on signup, no subscription. [slideforge.dev/pricing](https://slideforge.dev/pricing)
 
@@ -102,9 +104,9 @@ Full REST reference: [slideforge.dev/docs/api](https://slideforge.dev/docs/api)
 | `create_slide` | ONE slide from a structured intent (form + typed fields) or a brief; `mode=code` for sandboxed python-pptx. Response carries the fidelity manifest. | $0.05 (usable-or-free) |
 | `create_deck` | Whole deck: `slides[]` of intents, parallel render, one merged .pptx, per-slide fidelity rollup. Failed slides isolated + free. | N × $0.05 |
 | `plan_slide` | Brief → top form/variant candidates with confidence. | Free |
-| `browse_catalog` | 150+ patterns with per-form JSON Schemas + copy-pasteable example intents, themes, the code-mode widget toolkit. | Free |
-| `translate_deck` | Translate any PPTX preserving formatting (8 languages). | $0.02/slide |
-| `upload_asset` | Logos, theme PPTX, images; `purpose=pdf` extracts a PDF into editable slide intents; or AI-generate an image. | Free / $0.01/page / $0.05/image |
+| `browse_catalog` | 150+ patterns with per-form JSON Schemas + copy-pasteable example intents, themes, the code-mode widget toolkit. Pass an uploaded `theme_id` to list its branded cover/agenda/divider layouts. 9 built-in themes + your uploaded brand themes. | Free |
+| `translate_deck` | Translate any PPTX preserving formatting (32 languages). | $0.02/slide |
+| `upload_asset` | Logos, theme PPTX, images; `purpose=pdf` extracts a PDF into editable slide intents; or AI-generate an image. Theme upload (`purpose=theme`, base64 `data`) renders NATIVE by default — decks are built on the client's own template file. Omit `data` on large files for an in-card drag/drop zone. | Free / $0.01/page / $0.05/image |
 | `manage_account` | Balance, usage, jobs, security status, feedback. | Free |
 
 `dry_run: true` on create tools = validation + fidelity forecast at $0.
@@ -112,6 +114,19 @@ Full REST reference: [slideforge.dev/docs/api](https://slideforge.dev/docs/api)
 Two more tools (`generate_report`, `manage_connections` — data-driven reports from connected tools like Zoho Sprints) exist behind an enterprise gate and are not served by default.
 
 **Also on REST (for now): the Deck Doctor.** `POST /v1/inspect` — a free deterministic Deck Quality Report for **any** pptx (overflow via real font metrics, content hidden behind shapes, off-canvas leftovers, WCAG contrast). `POST /v1/repair` — deterministic fixes, never your words, $0.02/repaired slide, free dry-run quote. [Docs](https://slideforge.dev/docs/api/inspect)
+
+---
+
+## Security
+
+- Tool result bodies are credential-free — no signed URLs in responses. Previews are embedded
+  inline (the agent looks at the PNG directly); the .pptx downloads via header-auth
+  (`Authorization: Bearer` + ownership check), not a bearer-in-URL.
+- Need a shareable link instead? `POST /v1/jobs/<job_id>/download-url` mints a short-TTL,
+  single-use, revocable link.
+- Artifacts auto-delete 30 days after creation.
+- Every download is audit-logged.
+- `manage_account(action=security_status)` discloses the full posture in-band.
 
 ---
 
@@ -130,14 +145,18 @@ For Codex CLI / Cursor / Copilot and other [AGENTS.md](https://agents.md)-native
 
 ## Headless usage (Claude Code / Codex CLI)
 
-No inline widgets in a terminal — the response JSON carries signed URLs instead:
+No inline widgets in a terminal, but the tool result already embeds the preview PNG inline — the
+agent reads it directly out of the response, no fetch needed. The .pptx downloads via header-auth:
 
-```
-preview_url  → curl -o preview.png "<url>"   # the agent can LOOK at its own render
-pptx_url     → curl -o deck.pptx "<url>"
+```bash
+curl -H "Authorization: Bearer sf_live_YOUR_KEY" \
+  -o deck.pptx https://api.slideforge.dev/v1/jobs/<job_id>/pptx   # ownership-checked
 ```
 
-The self-review loop (render → view preview → fix → re-render) is documented in [`examples/claude-code.md`](examples/claude-code.md).
+To hand off a shareable link instead of the raw file, mint a single-use one:
+`POST /v1/jobs/<job_id>/download-url` — short-TTL, revocable, works once.
+
+The self-review loop (render → view inline preview → fix → re-render) is documented in [`examples/claude-code.md`](examples/claude-code.md).
 
 ---
 
