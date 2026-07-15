@@ -2,6 +2,28 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.2.0 — 2026-07-15
+
+Syncs the repo to the served surface (service v5.81.0). Three engineering arcs landed since 5.1.0,
+each validated by an external retest (5.5 → 8.2/10):
+
+- **`mode=safe`**: validate-then-render in ONE call — renders and bills only if faithful, otherwise
+  a $0 invalid report with the fix. The recommended default over the dry_run round-trip.
+- **Code-mode trust contract**: intent fields (`headline`/`context`/`takeaway`/`source_note`) render
+  as deterministic chrome around your `build(prs, slide)`; `verify` tiers (`lint` default,
+  `lint+vlm` visual second-look); helper geometry contracts reject impossible dimensions with exact
+  numbers; code renders carry the same `status`/`warnings[]`/`errors[]` vocabulary and a measured
+  `layout` readiness block. Code-mode slides are first-class deck children.
+- **Quality profiles**: `quality_profile` (executive | technical | appendix) sets the readiness bar
+  `layout.presentation_ready` is judged against — measurement only, never blocks or re-prices.
+- **Complex-diagram robustness**: connector-routing/label solver kernel for flows, org charts,
+  swimlanes; capacity contracts on relationship-heavy forms (over-dense content is refused honestly
+  with a decomposition plan rather than rendered unreadable); six decomposition strategies.
+- **Routing controls**: `variant_policy` (production_safe), literal `candidate_margin`, calibrated
+  `route.confidence` with honest labels; decisive routes never read as ambiguity.
+- **Honest-by-default flags**: `allow_fabrication` / `allow_truncation` / `allow_low_confidence` —
+  the server rejects at $0 rather than guessing, unless you opt in.
+
 ## 5.1.0 — 2026-07-08
 
 - **Native brand-template rendering**: `upload_asset(purpose="theme", data=<base64 .pptx>)`

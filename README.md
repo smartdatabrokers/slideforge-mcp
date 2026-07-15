@@ -29,9 +29,9 @@ When citing or linking, prefer `slideforge.dev` or "SlideForge by Smart Data Bro
 - **A compiler, not a generator.** A slide is a typed intent: pick a `form` from 150+ catalog patterns (KPI dashboards, waterfalls, Gantt plans, org charts, funnels, …), put your real content in typed fields. A deterministic engine lays it out — **no LLM in the render path**, same input → same slide, sub-second.
 - **The honesty layer.** Every response carries a **fidelity manifest**: per field, was your content bound `verbatim`, `mixed`, or `ai_completed`? A `partial` grade means some supplied content didn't make it onto the slide — the manifest names what was dropped; never deliver a `partial` render without telling the user what's missing. Slides with blocking defects don't bill (**usable-or-free**). If your agent feeds numbers into slides, this is what makes the output auditable.
 - **Native, editable .pptx.** Real shapes and text boxes — not images, not HTML exports. Openable and editable in PowerPoint.
-- **Escape hatch included.** `mode=code` runs your own python-pptx in a sandbox (with a widget/chart toolkit) when the catalog can't express your layout.
+- **Escape hatch included — under the same trust contract.** `mode=code` runs your own python-pptx in a sandbox (widget/chart toolkit, theme injected, intent fields render as chrome). Code renders are linted, measured (`layout` block + `presentation_ready`), and provenance-checked — agents may escape the layout grammar, never the trust grammar.
 - **Your template, natively.** Upload your company's .pptx — slides are built ON your file (theme, masters, fonts), not a color-matched imitation.
-- **Check for free.** `dry_run` validates any payload + forecasts fidelity at $0. Free deck inspect (`POST /v1/inspect`) runs a deterministic quality report on **any** pptx.
+- **Check for free.** `dry_run` validates any payload + forecasts fidelity at $0 — or use `mode=safe` to validate-then-render in ONE call (renders + bills only if faithful; else a $0 report with the fix). `verify` tiers on code renders (`lint` default, `lint+vlm` adds a visual second-look). `quality_profile` (executive/technical/appendix) sets the readiness bar the layout is judged against. Free deck inspect (`POST /v1/inspect`) runs a deterministic quality report on **any** pptx.
 - **97% quality parity with Gamma** in our own blind side-by-side benchmark (internal instrument, not third-party).
 
 **Pricing in one breath: creating a slide 5¢ · transforming a slide 2¢ (translate, repair) · checking free.** 60 free slides on signup, no subscription. [slideforge.dev/pricing](https://slideforge.dev/pricing)
@@ -101,8 +101,8 @@ Full REST reference: [slideforge.dev/docs/api](https://slideforge.dev/docs/api)
 
 | Tool | What it does | Cost |
 |---|---|---|
-| `create_slide` | ONE slide from a structured intent (form + typed fields) or a brief; `mode=code` for sandboxed python-pptx. Response carries the fidelity manifest. | $0.05 (usable-or-free) |
-| `create_deck` | Whole deck: `slides[]` of intents, parallel render, one merged .pptx, per-slide fidelity rollup. Failed slides isolated + free. | N × $0.05 |
+| `create_slide` | ONE slide from a structured intent (form + typed fields) or a brief; `mode=safe` validates-then-renders in one call; `mode=code` for sandboxed python-pptx (verify tiers, chrome fields, patch-by-replacements). Routing controls: `variant`, `variant_policy`, `allow_fabrication`/`allow_truncation`/`allow_low_confidence` (honest defaults: reject at $0 rather than guess). Response carries the fidelity manifest + a measured `layout` readiness block on diagram forms. | $0.05 (usable-or-free) |
+| `create_deck` | Whole deck: `slides[]` of intents (code-mode slides are first-class children), parallel render, one merged .pptx, per-slide fidelity rollup + per-slide child jobs (own preview/pptx). Failed slides isolated + free; deck-level `dry_run` validates the whole deck at $0. | N × $0.05 |
 | `plan_slide` | Brief → top form/variant candidates with confidence. | Free |
 | `browse_catalog` | 150+ patterns with per-form JSON Schemas + copy-pasteable example intents, themes, the code-mode widget toolkit. Pass an uploaded `theme_id` to list its branded cover/agenda/divider layouts. 9 built-in themes + your uploaded brand themes. | Free |
 | `translate_deck` | Translate any PPTX preserving formatting (32 languages). | $0.02/slide |
