@@ -4,7 +4,7 @@ description: "Create editable PowerPoint slides or whole decks with SlideForge. 
 license: MIT
 metadata:
   author: smartdatabrokers
-  version: "5.0"
+  version: "5.1"
 ---
 
 # Create slides & decks
@@ -73,6 +73,9 @@ board-grade widget + chart toolkit so you don't hand-roll primitives.
 - DO put real content in `data.*` typed fields; DON'T paste it into a brief when it matters.
 - DO fix errors by their `remedy`; DON'T retry an identical failed payload.
 - DO use one `create_deck` for multi-slide; DON'T loop `create_slide`.
+- DO pass `min_font_pt` when the user demands a minimum font size (binding: type grows to
+  meet it; unmeetable content = $0 error naming the size it needs); DON'T shrink-to-fit by
+  cutting the user's words yourself — `allow_truncation` drops whole items, never words.
 - DO pass `theme_id` (or upload a theme PPTX via `upload_asset(purpose="theme", data=<base64>)`)
   for branding — uploaded themes render NATIVE by default, built ON the client's own template
   file (master, layouts, fonts).

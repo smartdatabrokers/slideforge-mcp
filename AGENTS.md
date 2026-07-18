@@ -55,6 +55,10 @@ Bearer key. Reference: https://slideforge.dev/docs/api — machine-readable rate
   .pptx>)` renders NATIVE by default — the deck is built ON their template file (master,
   layouts, fonts), not a color-matched imitation. `create_slide(form="template_layout", ...)`
   fills the template's own designed cover/agenda/divider slides verbatim.
+- **Client demands a minimum font size?** Pass `min_font_pt` (typical ask: 12). It is BINDING:
+  type grows to meet the floor where the box allows; content that cannot fit returns a $0
+  `min_font_not_met` error naming the size it actually needs — set `allow_truncation: true`
+  to render the subset that fits (`fidelity: verbatim_truncated`) instead.
 - **Layouts the catalog can't express:** `mode=code` (sandboxed python-pptx + a widget/chart
   helper toolkit — list it via `browse_catalog type=widgets`). Still $0.05, still deterministic.
 - **Check any existing deck for free:** `POST /v1/inspect` (REST) returns a Deck Quality Report

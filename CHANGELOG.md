@@ -2,6 +2,24 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.3.0 — 2026-07-18
+
+Syncs the repo to the served surface (service v5.90.1).
+
+- **`min_font_pt`** on `create_slide` (and per-slide in `create_deck`): a BINDING minimum type
+  size, 6–40pt. Text is never shrunk below the floor — it GROWS to meet it where the box allows;
+  most catalog forms adapt to a 12pt ask dynamically. Content that cannot fit at the floor is a
+  $0 `min_font_not_met` error naming the size it actually needs; `allow_truncation: true`
+  renders the fitting subset (`fidelity: verbatim_truncated`, item-granular — never chopped
+  words). Chart/axis furniture is judged on its own floor, so dense exhibits stay expressible.
+- **Per-variant payload contracts**: `browse_catalog type=schema` + `variant=` returns that
+  variant's exact machine-readable contract (JSON Schema, capacity, field mapping, worked
+  example) — and every advertised example is now guaranteed to bind with nothing silently
+  dropped (contract tests anchor examples against the render, not against themselves).
+- **Fidelity forecast honesty**: `dry_run` no longer labels a `blocks` payload ignored when the
+  binder's compatibility fallback binds it; `input_shape_hint` warnings steer toward each
+  form's canonical `data.*` shape.
+
 ## 5.2.0 — 2026-07-15
 
 Syncs the repo to the served surface (service v5.81.0). Three engineering arcs landed since 5.1.0,
