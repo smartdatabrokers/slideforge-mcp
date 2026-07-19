@@ -81,3 +81,7 @@ board-grade widget + chart toolkit so you don't hand-roll primitives.
   file (master, layouts, fonts).
 - DO use `create_slide(form="template_layout", theme_id=..., data={"layout": ..., "fills": ...})`
   to fill the template's own designed cover/agenda/divider slides verbatim.
+- DO expect topical design on the default themes: an unpinned render may take a subject-informed
+  accent palette + designed cover (the response's design note names the choice). Pass
+  `styling: "clean"` for the neutral default look; a pinned `theme_id`/uploaded theme never
+  takes topical styling.
