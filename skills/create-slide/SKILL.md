@@ -30,6 +30,16 @@ usable-or-free; identical input re-renders free.
 For a whole deck: ONE `create_deck` call with `slides[]` (a list of create_slide intents).
 Parallel render, one merged pptx, per-slide fidelity rollup; failed slides are isolated and free.
 
+Grammar worth knowing (v5.104 surface):
+- **Stat prominence**: list/workflow block items take `metric: {value, label}` — the number
+  renders as a stat column instead of hiding in prose. Keep values bare (`42` or `"42"`),
+  no % signs, units, or currency symbols inside numeric fields.
+- **Architecture depth**: layer stacks take `orientation: "horizontal"` (left-to-right
+  pipeline with crossing control rails) and per-component `state: current|target|gap`
+  (capability-heat tinting) — consulting capability-map staples from one typed payload.
+- **`quality_profile`** (executive/technical/appendix) answers on ANY form — the response's
+  `layout.presentation_ready` is judged against it; measurement only, never blocks or bills.
+
 ## Quick path (throwaway / exploratory)
 
 A plain-text `brief` renders in one call — the engine routes it to a form. Fine for drafts;

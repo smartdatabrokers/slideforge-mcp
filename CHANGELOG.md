@@ -2,6 +2,32 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.4.0 — 2026-07-21
+
+Syncs the repo to the served surface (service v5.104.0).
+
+### Payload grammar
+- Stat prominence: list/workflow block items accept `metric: {value, label}` — renders as a
+  stat column. Numeric fields want finite bare numbers (no % signs, units, currency symbols).
+- Layer stacks: `orientation: "horizontal"` (left-to-right pipeline, crossing control rails)
+  and per-component `state: current|target|gap` capability-heat tinting.
+- `quality_profile` (executive/technical/appendix) answers on any form; measurement only.
+
+### Contract honesty
+- `dry_run` validated responses carry explicit next-step text; unknown intent fields warn
+  (`field_ignored`) instead of vanishing; Gantt validates period + dependency references;
+  matrix rows validate cell cardinality; a `display_shrink` warning fires when a
+  display-scale design renders far below its intended size.
+- Brief-routed fills may switch to a sibling variant when the fill's structure check
+  disagrees with retrieval (`ai_completed` provenance, disclosed in the response meta).
+
+### Rendering
+- Consultant-grade structural upgrades across architecture diagrams: contained numbered
+  layer stacks with solid control rails, continuous funnels, true staircase climbs with
+  tinted maturity bands, nested-ring qualifiers, typed flow-node icons.
+- Uploaded brand templates: native emit now clears the template's own footer chrome and
+  header zones (per-template regression harness behind it).
+
 ## 5.3.0 — 2026-07-18
 
 Syncs the repo to the served surface (service v5.90.1).
