@@ -2,6 +2,23 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.5.0 — 2026-07-23
+
+Adds a **local stdio MCP server** alongside the hosted remote endpoint. It's a thin REST
+client over `api.slideforge.dev` (holds no engine logic): the 7 tool schemas are baked in
+locally — so `tools/list` works with no network and no key — and each call forwards to the
+REST tool-dispatch endpoint (`POST /v1/tools/{name}`) authenticated with `SLIDEFORGE_API_KEY`.
+
+- For clients that boot MCP servers from a container/stdio, and for offline schema discovery.
+- Most agents should keep using the hosted remote server (`https://api.slideforge.dev/mcp/`,
+  OAuth 2.1 or API key) — no install. See the README "Run it locally" section.
+- Ships `pyproject.toml` (console entry `slideforge-mcp`), a Python package under
+  `src/slideforge_mcp/`, a contract snapshot (`contract/tools_list.prod.json`) captured
+  verbatim from prod, and a contract-parity test that fails if the wrapper drifts from the
+  served surface.
+- Replaces the previous `mcp-remote`-based Dockerfile (which registries reject as a proxy)
+  with one that builds and runs the local server.
+
 ## 5.4.0 — 2026-07-21
 
 Syncs the repo to the served surface (service v5.104.0).

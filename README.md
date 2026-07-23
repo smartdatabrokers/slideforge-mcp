@@ -81,6 +81,42 @@ Settings → Apps → Advanced → Developer mode → Add custom connector → `
 
 Get a key: [slideforge.dev](https://slideforge.dev) → Console → API keys. (Codex CLI and other AGENTS.md-native tools: see [`AGENTS.md`](AGENTS.md).)
 
+### Run it locally (stdio — for container/offline clients)
+
+Most clients should use the hosted remote server above (no install). But if your client boots
+MCP servers from a **container or a local stdio process**, run the bundled local server. It's a
+thin REST client over `api.slideforge.dev` — it holds no engine logic; the tool schemas are baked
+in locally (so discovery works offline, no key) and each call forwards to the SlideForge REST API
+authenticated with your key.
+
+```bash
+pip install slideforge-mcp        # or: uv pip install slideforge-mcp
+export SLIDEFORGE_API_KEY=sf_live_YOUR_KEY
+slideforge-mcp                    # speaks MCP over stdio
+```
+
+Or via Docker:
+
+```bash
+docker build -t slideforge-mcp .
+docker run -i -e SLIDEFORGE_API_KEY=sf_live_YOUR_KEY slideforge-mcp
+```
+
+Client config (stdio):
+
+```json
+{
+  "mcpServers": {
+    "slideforge": {
+      "command": "slideforge-mcp",
+      "env": { "SLIDEFORGE_API_KEY": "sf_live_YOUR_KEY" }
+    }
+  }
+}
+```
+
+Schema discovery (`tools/list`) needs neither a key nor network; tool *calls* need the key.
+
 ### REST (no MCP)
 
 ```bash

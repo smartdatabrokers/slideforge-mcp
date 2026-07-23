@@ -1,9 +1,28 @@
-# SlideForge is a REMOTE MCP server (https://api.slideforge.dev/mcp/, OAuth 2.1 or API key).
-# This image is a thin stdio bridge for platforms that boot MCP servers from a container
-# (e.g. Glama's inspector): it proxies stdio <-> the hosted Streamable HTTP endpoint.
-# Provide SLIDEFORGE_API_KEY (an sf_live_... key from https://slideforge.dev/console) at run time.
-FROM node:22-slim
-ENV MCP_URL=https://api.slideforge.dev/mcp/
-# Pre-fetch the bridge so container start is fast and offline-safe
-RUN npm install -g mcp-remote@latest
-ENTRYPOINT ["sh", "-c", "mcp-remote \"$MCP_URL\" --transport http-only --header \"Authorization: Bearer ${SLIDEFORGE_API_KEY}\""]
+# SlideForge local stdio MCP server — a real MCP server that runs locally over stdio.
+# It bakes the tool schemas in (so `tools/list` works with no network and no key) and
+# forwards tool calls to the SlideForge REST API (https://api.slideforge.dev) using an
+# API key. NOT an mcp-remote proxy: the MCP protocol is served locally.
+#
+# Provide SLIDEFORGE_API_KEY (an sf_live_... key from https://slideforge.dev) at run time
+# to make tool calls. Schema discovery needs neither a key nor network.
+FROM python:3.12-slim
+
+RUN pip install --no-cache-dir uv
+
+WORKDIR /app
+
+# Install deps first for layer caching, then the package.
+COPY pyproject.toml README.md ./
+COPY src ./src
+RUN uv pip install --system --no-cache .
+
+# Non-root.
+RUN useradd -m appuser
+USER appuser
+
+ENV PYTHONUNBUFFERED=1 \
+    SLIDEFORGE_API_BASE="https://api.slideforge.dev" \
+    SLIDEFORGE_API_KEY=""
+
+# Launch the stdio MCP server (single process, JSON-RPC over stdin/stdout).
+CMD ["slideforge-mcp"]

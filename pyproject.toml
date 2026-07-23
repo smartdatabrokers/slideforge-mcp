@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "slideforge-mcp"
+version = "5.5.0"
+description = "Local stdio MCP server for SlideForge — the deterministic PowerPoint compiler for AI agents. Thin REST client over api.slideforge.dev."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Smart Data Brokers GmbH", email = "hello@slideforge.dev" }]
+keywords = ["mcp", "model-context-protocol", "powerpoint", "pptx", "slides", "slideforge"]
+dependencies = [
+  "fastmcp>=3.4,<4",
+  "httpx>=0.27",
+  "mcp>=1.2",
+]
+
+[project.urls]
+Homepage = "https://slideforge.dev"
+Repository = "https://github.com/smartdatabrokers/slideforge-mcp"
+Documentation = "https://slideforge.dev/docs/mcp"
+
+[project.scripts]
+slideforge-mcp = "slideforge_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/slideforge_mcp"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/slideforge_mcp/contract/tools_list.prod.json" = "slideforge_mcp/contract/tools_list.prod.json"
