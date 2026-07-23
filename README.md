@@ -1,3 +1,6 @@
+<!-- mcp-name: dev.slideforge/slideforge -->
+mcp-name: dev.slideforge/slideforge
+
 # SlideForge MCP — PowerPoint slides for AI agents
 
 > **SlideForge ([slideforge.dev](https://slideforge.dev)) — the deterministic PowerPoint compiler for AI agents.** Typed slide intents → native, fully editable .pptx in under a second, with a fidelity manifest that states exactly what was bound verbatim. Built by [Smart Data Brokers GmbH](https://slideforge.dev), Switzerland.

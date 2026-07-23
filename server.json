@@ -1,0 +1,33 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "dev.slideforge/slideforge",
+  "title": "SlideForge",
+  "description": "Deterministic, fully editable PowerPoint from typed slide intents. 150+ layouts, brand templates.",
+  "version": "5.5.1",
+  "repository": {
+    "url": "https://github.com/smartdatabrokers/slideforge-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.slideforge.dev/mcp/"
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "slideforge-mcp",
+      "version": "5.5.1",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "SLIDEFORGE_API_KEY",
+          "description": "SlideForge API key (starts with sf_live_). Required to run tool calls; schema discovery works without it. Get one at https://slideforge.dev.",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
