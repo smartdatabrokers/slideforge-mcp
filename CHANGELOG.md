@@ -2,6 +2,14 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.5.1 — 2026-07-23
+
+- Dockerfile `CMD` is now `["python", "-m", "slideforge_mcp"]` (command + args) instead of the
+  bare console script, so container launchers that require a non-empty argument list — e.g.
+  Glama's deploy config ("At least one command argument is required") — accept it. Adds
+  `slideforge_mcp/__main__.py` so `python -m slideforge_mcp` runs the stdio server. Behaviour
+  is identical to `slideforge-mcp`.
+
 ## 5.5.0 — 2026-07-23
 
 Adds a **local stdio MCP server** alongside the hosted remote endpoint. It's a thin REST

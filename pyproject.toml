@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "slideforge-mcp"
-version = "5.5.0"
+version = "5.5.1"
 description = "Local stdio MCP server for SlideForge — the deterministic PowerPoint compiler for AI agents. Thin REST client over api.slideforge.dev."
 readme = "README.md"
 requires-python = ">=3.11"

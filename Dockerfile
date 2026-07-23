@@ -25,4 +25,7 @@ ENV PYTHONUNBUFFERED=1 \
     SLIDEFORGE_API_KEY=""
 
 # Launch the stdio MCP server (single process, JSON-RPC over stdin/stdout).
-CMD ["slideforge-mcp"]
+# Use `python -m` (command + args) so launchers that require a non-empty argument
+# list — e.g. Glama's deploy config — accept it. `slideforge-mcp` (the console script)
+# is equivalent.
+CMD ["python", "-m", "slideforge_mcp"]
