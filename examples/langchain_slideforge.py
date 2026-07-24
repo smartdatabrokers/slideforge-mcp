@@ -4,7 +4,11 @@ SlideForge is an MCP server, so LangChain loads its tools directly via
 `langchain-mcp-adapters` — no SlideForge SDK needed.
 
     pip install langchain-mcp-adapters
-    export SLIDEFORGE_API_KEY=sf_live_...      # https://slideforge.dev -> Console -> API keys
+    export SLIDEFORGE_API_KEY=sf_live_...
+
+Getting the key is free and takes ~30 seconds: sign up at https://slideforge.dev/sign-up
+(60 free slides, no credit card, no subscription), then copy it from
+https://slideforge.dev/console/keys. Discovery and dry_run are free; only real renders spend.
 
 Run:  python langchain_slideforge.py
 

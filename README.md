@@ -138,6 +138,8 @@ tools = await client.get_tools()        # 7 tools, drop into any LangGraph agent
 ```
 
 Runnable examples + the LlamaIndex equivalent: [`examples/`](examples/README.md).
+Need a key? [Sign up](https://slideforge.dev/sign-up) — **60 free slides, no credit card** — then grab it
+at [console/keys](https://slideforge.dev/console/keys).
 
 ### REST (no MCP)
 

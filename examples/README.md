@@ -9,9 +9,18 @@ or know exactly why not.
 Runnable files: [`langchain_slideforge.py`](langchain_slideforge.py) · [`llamaindex_slideforge.py`](llamaindex_slideforge.py)
 Both verified end-to-end against production on 2026-07-24 (real `.pptx` out).
 
+## Get a key (free, ~30 seconds)
+
+[**Sign up**](https://slideforge.dev/sign-up) → **60 free slides, no credit card, no subscription** →
+copy your key from [**slideforge.dev/console/keys**](https://slideforge.dev/console/keys).
+
 ```bash
-export SLIDEFORGE_API_KEY=sf_live_...   # https://slideforge.dev -> Console -> API keys
+export SLIDEFORGE_API_KEY=sf_live_...
 ```
+
+That one key works for MCP *and* REST. Discovery (`browse_catalog`, `plan_slide`) and `dry_run` are
+free and never touch the 60 — you only spend on an actual render, and a render that isn't usable
+[never bills](https://slideforge.dev/pricing).
 
 ## LangChain / LangGraph
 
