@@ -120,6 +120,25 @@ Client config (stdio):
 
 Schema discovery (`tools/list`) needs neither a key nor network; tool *calls* need the key.
 
+### LangChain / LlamaIndex (agent frameworks)
+
+No SlideForge SDK needed — both load the MCP tools directly:
+
+```bash
+pip install langchain-mcp-adapters      # or: pip install llama-index-tools-mcp
+```
+
+```python
+from langchain_mcp_adapters.client import MultiServerMCPClient
+client = MultiServerMCPClient({"slideforge": {
+    "transport": "streamable_http",
+    "url": "https://api.slideforge.dev/mcp/",
+    "headers": {"Authorization": f"Bearer {API_KEY}"}}})
+tools = await client.get_tools()        # 7 tools, drop into any LangGraph agent
+```
+
+Runnable examples + the LlamaIndex equivalent: [`examples/`](examples/README.md).
+
 ### REST (no MCP)
 
 ```bash
