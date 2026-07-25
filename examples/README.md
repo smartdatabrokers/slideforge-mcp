@@ -9,6 +9,10 @@ or know exactly why not.
 Runnable files: [`langchain_slideforge.py`](langchain_slideforge.py) · [`llamaindex_slideforge.py`](llamaindex_slideforge.py)
 Both verified end-to-end against production on 2026-07-24 (real `.pptx` out).
 
+**No-code / low-code:** [**n8n**](n8n.md) — nothing to install. n8n's *first-party* **MCP Client Tool**
+connects to us directly (Cloud **and** self-hosted), or use the plain **HTTP Request** node for
+pipelines with no LLM in the loop. Transport must be **HTTP Streamable**, not SSE.
+
 ## Get a key (free, ~30 seconds)
 
 [**Sign up**](https://slideforge.dev/sign-up) → **60 free slides, no credit card, no subscription** →
