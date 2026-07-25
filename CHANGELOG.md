@@ -2,6 +2,19 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.5.2 — 2026-07-25
+
+- **Contract refresh — the wrapper matches the production tool surface again.** The live parity
+  detector (`tests/test_contract_parity.py`) had gone red: `create_slide`'s snapshot was behind prod
+  on three parameter descriptions (`dry_run`, `min_font_pt`, `quality_profile`) and its tool
+  description by 9 characters. **No tool was added or removed and no parameter changed** — the
+  surface is identical, so nothing built against 5.5.1 breaks. What was wrong is that the package
+  described the API slightly less well than the API describes itself, and those descriptions are
+  what an agent reads to decide how to call us.
+- **New: `scripts/refresh_contract.py`** — regenerates the snapshot from prod and prints exactly what
+  drifted (`--check` reports without writing). This was a manual copy before, which is how the
+  earlier cp1252 mojibake got in; the script writes UTF-8 explicitly with `ensure_ascii=False`.
+
 ## 5.5.1 — 2026-07-23
 
 - Dockerfile `CMD` is now `["python", "-m", "slideforge_mcp"]` (command + args) instead of the
