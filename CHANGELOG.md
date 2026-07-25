@@ -2,6 +2,15 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.5.3 — 2026-07-25
+
+- **Contract refresh for API `v5.116.0`.** `browse_catalog` gained a `theme_id` parameter (pass an
+  uploaded theme's id with `type=themes` to get its branded furniture layouts + fill schemas), and
+  `create_slide`'s `verify` description now matches what actually ships. **Additive** — nothing built
+  on 5.5.2 breaks; the wrapper simply advertises the new parameter now.
+- Caught within minutes by the new weekly published-surface sweep rather than by someone noticing
+  months later: the API shipped a release, and the published wrapper was immediately behind.
+
 ## 5.5.2 — 2026-07-25
 
 - **Contract refresh — the wrapper matches the production tool surface again.** The live parity

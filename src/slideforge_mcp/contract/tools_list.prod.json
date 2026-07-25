@@ -63,6 +63,10 @@
           "top": {
             "type": "integer",
             "description": "Max results (with type=themes)."
+          },
+          "theme_id": {
+            "type": "string",
+            "description": "With type=themes: an uploaded theme's id -> its branded furniture layouts + fill schemas (render via create_slide(form=template_layout))."
           }
         }
       }
@@ -363,7 +367,7 @@
               "lint+vlm",
               "full"
             ],
-            "description": "mode=code tier. Default `lint`: static geometry linter (overlap/off-canvas/zero-size) + composer content validators — no LLM. `lint+vlm` adds a VLM second-look (~+8s). `off` skips checks."
+            "description": "mode=code tier. Default `lint`: static geometry linter (overlap/off-canvas/zero-size) + composer content validators — no LLM. `lint+vlm` adds a VLM second-look (~+3s) and makes a blank/contentless render a $0 error, not a billed warning. `off` skips checks."
           },
           "wait": {
             "type": "string",
