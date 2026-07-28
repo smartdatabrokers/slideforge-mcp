@@ -2,6 +2,12 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.5.4 — 2026-07-28
+
+- **Contract refresh.** `create_deck`'s description moved by one character upstream (deck children
+  now inherit the deck's theme). No parameter, tool or shape changed — nothing built on 5.5.3
+  breaks. Caught by the pre-tag parity sweep, which is exactly when it should be.
+
 ## 5.5.3 — 2026-07-25
 
 - **Contract refresh for API `v5.116.0`.** `browse_catalog` gained a `theme_id` parameter (pass an

@@ -1,7 +1,7 @@
 {
   "_comment": "Source of truth for the local wrapper's tool surface. Captured verbatim from the PROD served MCP tools/list. Regenerate + cut a release when the served surface changes (see tests/test_contract_parity.py).",
   "_source": "https://api.slideforge.dev/mcp/ tools/list",
-  "_captured": "2026-07-25",
+  "_captured": "2026-07-28",
   "tools": [
     {
       "name": "browse_catalog",
@@ -418,7 +418,7 @@
         "openai/toolInvocation/invoking": "Generating…",
         "openai/toolInvocation/invoked": "Done"
       },
-      "description": "Create a WHOLE deck in one call: `slides` is a list of create_slide intents (same form menu + data shapes — see create_slide). Slides fill in parallel and merge into one themed PPTX with page numbers. Include furniture: a hero_statement cover, section_divider breaks, and a closing (hero_statement variant=contact_closing via blocks-free slots).\n\nAlso: mode=assemble merges existing slide job_ids as-rendered (free; theme_id does NOT re-theme them — render with create_deck(slides=[…], theme_id=…) for a unified theme); mode=fork clones a deck (free).\nPolling: deck_id == job_id — create_slide(mode=status, job_id=<deck_id>).",
+      "description": "Create a WHOLE deck in one call: `slides` is a list of create_slide intents (same form menu + data shapes — see create_slide). Slides fill in parallel and merge into one themed PPTX with page numbers. Include furniture: a hero_statement cover, section_divider breaks, and a closing (hero_statement variant=contact_closing via blocks-free slots).\n\nAlso: mode=assemble merges existing slide job_ids as-rendered (free; theme_id does NOT re-theme them — render with create_deck(slides=[…], theme_id=…) for a unified theme); mode=fork clones a deck (free).\nPolling: deck_id == job_id — manage_account(action=job, job_id=<deck_id>).",
       "inputSchema": {
         "type": "object",
         "properties": {
