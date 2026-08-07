@@ -2,6 +2,18 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.6.0 — 2026-08-07
+
+- **Contract refresh for API `v5.154.0` — in-chat top-up.** `manage_account` gains
+  `action=topup` (+ optional `amount`): mints a Stripe checkout link the user pays at
+  directly; the wallet credits automatically on completion. Use it when a render is
+  refused for balance — the 402 envelope also carries a ready `checkout_url` now.
+- Rolls up the accumulated additive surface since 5.5.4: `create_slide` gains
+  `direction` (RTL rendering), `create_deck` gains `imagery`/`imagery_tag`,
+  `manage_account` gains `severity` on feedback, plus description refreshes across
+  `plan_slide`, `translate_deck`, and `upload_asset`. **Additive throughout** —
+  nothing built on 5.5.x breaks.
+
 ## 5.5.4 — 2026-07-28
 
 - **Contract refresh.** `create_deck`'s description moved by one character upstream (deck children

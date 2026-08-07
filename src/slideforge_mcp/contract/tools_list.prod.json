@@ -1,7 +1,7 @@
 {
   "_comment": "Source of truth for the local wrapper's tool surface. Captured verbatim from the PROD served MCP tools/list. Regenerate + cut a release when the served surface changes (see tests/test_contract_parity.py).",
   "_source": "https://api.slideforge.dev/mcp/ tools/list",
-  "_captured": "2026-07-28",
+  "_captured": "2026-08-07",
   "tools": [
     {
       "name": "browse_catalog",
@@ -16,7 +16,7 @@
           "note": "free"
         }
       },
-      "description": "Browse the SSG catalog progressively. No args -> form overview (when-to-use, bound fields, variant counts). family=<form> -> variant one-liners. q=<text> -> ranked search. variant=/prior_id= -> example payload. type=schema + family -> a compact family-level variant chooser (not a sendable contract); type=schema + family + variant -> that variant's exact payload contract (JSON Schema, capacity, field mapping, examples). Free. Code path: type=widgets = the add_widget() catalog (name=<widget> for its contract + thumbnail); type=helpers = python-pptx helper signatures. type=themes + an uploaded theme_id -> that template's branded FURNITURE layouts (its own cover/agenda/divider/closing slides + fill schemas + previews) — render via create_slide(form=template_layout, theme_id, data={layout, fills}).",
+      "description": "Browse the PowerPoint slide catalog progressively. No args -> form overview (when-to-use, bound fields, variant counts). family=<form> -> variant one-liners. q=<text> -> ranked search. variant=/prior_id= -> example payload. type=schema + family -> a compact family-level variant chooser (not a sendable contract); type=schema + family + variant -> that variant's exact payload contract (JSON Schema, capacity, field mapping, examples). Free. Code path: type=widgets = the add_widget() catalog (name=<widget> for its contract + thumbnail); type=helpers = python-pptx helper signatures. type=themes + an uploaded theme_id -> that template's branded FURNITURE layouts (its own cover/agenda/divider/closing slides + fill schemas + previews) — render via create_slide(form=template_layout, theme_id, data={layout, fills}).",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -84,7 +84,7 @@
           "note": "free"
         }
       },
-      "description": "Plan before rendering: send a short brief, get ranked candidates + a separated verdict — route (which slide: selected|needs_confirmation|ambiguous), input (can it render: ready|extractable_from_brief|needs_structured_data) and next_action. Free (one embedding). Then call create_slide with the chosen form(+variant). route.confidence: calibrated = measured P(route correct) with label high/medium/low cut on it; retrieval_score/retrieval_margin = the raw family-aggregated classifier values (not probabilities; margin can be negative when families contest); source = classifier | structural_router (LLM-rescued). candidate_margin on the top candidate = literal gap between the two shown scores.",
+      "description": "Plan a PowerPoint slide before rendering (free): send a short brief, get ranked candidates + a separated verdict — route (which slide: selected|needs_confirmation|ambiguous), input (can it render: ready|extractable_from_brief|needs_structured_data) and next_action. Free (one embedding). Then call create_slide with the chosen form(+variant). route.confidence: calibrated = measured P(route correct) with label high/medium/low cut on it; retrieval_score/retrieval_margin = the raw family-aggregated classifier values (not probabilities; margin can be negative when families contest); source = classifier | structural_router (LLM-rescued). candidate_margin on the top candidate = literal gap between the two shown scores.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -130,12 +130,12 @@
         "ui": {
           "resourceUri": "ui://slideforge/result-card/v19"
         },
-        "openai/outputTemplate": "ui://slideforge/result-card/v19",
+        "openai/outputTemplate": "ui://slideforge/result-card/skybridge/v19",
         "openai/widgetAccessible": true,
         "openai/toolInvocation/invoking": "Generating…",
         "openai/toolInvocation/invoked": "Done"
       },
-      "description": "Create ONE slide from a structured intent in ONE call: pick a `form` from the menu and put your content in the typed fields (placed on the slide as given), or pass a `brief` and let the server route it. Fields tagged (per-form) bind only where the form has that slot — ignored-with-warning elsewhere; see each form's `binds` in browse_catalog.\n\nFORM MENU:\n  agenda_list: an ordered list of sections/topics to walk through\n  bar_rank_chart: bars comparing magnitudes across categories\n  calendar_grid: events on a real calendar - a week planner (day columns x hour axis) or a month grid with release/event chips (data.events)\n  card_grid: several equal, unordered peer blocks (features, options, pillars)\n  case_story: one named story told as evidence: challenge, action, measured result\n  comparison_matrix: options x criteria grid: data.columns x data.rows\n  cycle_flow: a closed loop of ordered stages where the last feeds the first (recurring process)\n  data_table: a plain factual table of records by fields\n  editorial_split: two side-by-side halves in contrast (before/after, problem/solution)\n  funnel: a quantity narrowing through ordered stages\n  gantt_plan: tasks as bars across named periods on a schedule grid\n  gauge_score: one score on a dial against a scale\n  hero_statement: a statement slide: a cover (typographic/image-led/exec-metadata), a from->to or thesis-quote transition, or a contact or next-steps closing\n  hub_spoke: one central element with several elements connected around it\n  kpi_metrics: a board of headline metric cards; add data.sections (Highlights/Risks/Asks) for a one-slide exec summary / board update / QBR snapshot\n  layer_stack: stacked layers where higher sits on, and depends on, lower\n  linear_flow: ordered process stages read left to right (or inputs to process to outputs)\n  maturity_staircase: ascending levels climbing to a higher state\n  nested_magnitude: nested containment - each level contains the next\n  org_structure: a reporting hierarchy / org tree\n  position_map: items placed by two axes - named 2x2 cells or scatter positions\n  pyramid_hierarchy: a triangle of stacked tiers, foundation to apex\n  ramp_curve: a continuous rising wedge split into phases - effort or value accumulating over time\n  section_divider: a section-break slide: big section number + title; blocks = agenda progress chips (emphasis=primary marks the current section)\n  segment_wheel: a wheel of equal segments around a center - peer categories in the round (composition, not flow)\n  status_dashboard: initiatives/workstreams tracked by status, owner, progress\n  strategic_fork: one origin splitting into two mutually exclusive paths, one recommended\n  swimlane_flow: actor/function lanes by phases, task cells, handoffs across lanes\n  swot: the four-quadrant strengths / weaknesses / opportunities / threats grid\n  system_flow_map: nodes connected by directed arrows that carry the message (data/requests move)\n  takeaway_stack: a few bold conclusions, each with one line of support; optional closing ask\n  timeline_roadmap: milestones/phases laid out along a time axis\n  trend_chart: one or more series plotted over time\n  value_chain: support bands over primary activity columns flowing into a goal arrowhead (how value is created; data.support = the bands)\n  visual_showcase: one dominant screenshot/image with numbered callouts pointing into it\n  waterfall_bridge: a start value bridged to an end value by plus/minus contributions\n\nExact per-form data shapes: browse_catalog(type=schema, family=<form>) — the generated, always-current JSON Schema + a worked example. (List-shaped forms take `blocks`: [{\"label\",\"sub\",\"detail\":[str],\"emphasis\"}]; structured forms take typed `data`.)\n\nEscape modes: mode=code (caller-supplied python-pptx in sandbox, $0.05 — use for forms the menu cannot express: calendars, custom diagrams); mode=status (poll a job, free).\nImage-led asks (photo covers, full-bleed visuals): hero_statement + image_prompt (+$0.05) or image_src.",
+      "description": "Create one PowerPoint slide (.pptx, native, editable) from a structured intent in ONE call: pick a `form` from the menu and put your content in the typed fields (placed on the slide as given), or pass a `brief` and let the server route it. Fields tagged (per-form) bind only where the form has that slot — ignored-with-warning elsewhere; see each form's `binds` in browse_catalog.\n\nBLOCKED ($0)? If an error has `can_autofix:true`, merge its `patch` into the args at `patch_target`. Unchanged retries repeat the block. New form: browse_catalog(type=schema) first.\n\n\nFORM MENU:\n  agenda_list: an ordered list of sections/topics to walk through\n  bar_rank_chart: bars comparing magnitudes across categories\n  calendar_grid: events on a real calendar - week planner (day x hour) or month grid with event chips (data.events)\n  card_grid: several equal, unordered peer blocks (features, options, pillars)\n  case_story: one named story told as evidence: challenge, action, measured result\n  comparison_matrix: options x criteria grid: data.columns x data.rows\n  cycle_flow: a closed loop of ordered stages where the last feeds the first (recurring process)\n  data_table: a plain factual table of records by fields\n  editorial_split: two side-by-side halves in contrast (before/after, problem/solution)\n  funnel: a quantity narrowing through ordered stages\n  gantt_plan: tasks as bars across named periods on a schedule grid\n  gauge_score: one score on a dial against a scale\n  hero_statement: a statement slide: covers (typographic/image-led/exec), from->to / thesis-quote transitions, contact or next-steps closings\n  hub_spoke: one central element with several elements connected around it\n  image_story: a picture shown WHOLE (uncropped) beside/above narrative text - photo story, narrative\n  kpi_metrics: a board of headline metric cards; data.sections (Highlights/Risks/Asks) makes it an exec summary / QBR snapshot\n  layer_stack: stacked layers where higher sits on, and depends on, lower\n  linear_flow: ordered process stages read left to right (or inputs to process to outputs)\n  maturity_staircase: ascending levels climbing to a higher state\n  nested_magnitude: nested containment - each level contains the next\n  org_structure: a reporting hierarchy / org tree\n  position_map: items placed by two axes - named 2x2 cells or scatter positions\n  pyramid_hierarchy: a triangle of stacked tiers, foundation to apex\n  ramp_curve: a continuous rising wedge split into phases - effort or value accumulating over time\n  section_divider: a section-break: big section number + title; blocks = agenda progress chips (emphasis=primary = current)\n  segment_wheel: a wheel of equal segments around a center - peer categories in the round (composition, not flow)\n  status_dashboard: initiatives/workstreams tracked by status, owner, progress\n  strategic_fork: one origin splitting into two mutually exclusive paths, one recommended\n  swimlane_flow: actor/function lanes by phases, task cells, handoffs across lanes\n  swot: the four-quadrant strengths / weaknesses / opportunities / threats grid\n  system_flow_map: nodes connected by directed arrows that carry the message (data/requests move)\n  takeaway_stack: a few bold conclusions, each with one line of support; optional closing ask\n  timeline_roadmap: milestones/phases laid out along a time axis\n  trend_chart: one or more series plotted over time\n  value_chain: support bands over primary activity columns flowing into a goal arrowhead (data.support = the bands)\n  visual_showcase: one dominant screenshot/image with numbered callouts pointing into it\n  waterfall_bridge: a start value bridged to an end value by plus/minus contributions\n\nExact per-form data shapes: browse_catalog(type=schema, family=<form>) — the generated,always-current JSON Schema + a worked example. (List-shaped forms take `blocks`: [{\"label\",\"sub\",\"detail\":[str],\"emphasis\"}]; structured forms take typed `data`.)\n\nEscape modes: mode=code (caller-supplied python-pptx in sandbox, $0.05 — use for forms the menu cannot express: calendars, custom diagrams); mode=status (poll a job, free).\nImage-led asks (photo covers, full-bleed visuals): hero_statement + image_prompt (+$0.05) or image_src.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -233,11 +233,11 @@
           },
           "allow_fabrication": {
             "type": "boolean",
-            "description": "Brief mode only: by default a bare brief on a DATA form (kpi/funnel/comparison/…) returns status=would_fabricate at cost:0 rather than INVENT the numbers/entities. Supply the data as typed fields to render verbatim, or set true to let the brief author them (fidelity=ai_completed). Default false."
+            "description": "Brief mode only: a bare brief on a DATA form (kpi/funnel/comparison/…) returns would_fabricate at $0 rather than INVENT numbers. Send typed fields for verbatim, or true to let the brief author them (fidelity=ai_completed). Default false."
           },
           "allow_truncation": {
             "type": "boolean",
-            "description": "By default, supplying MORE items than a form holds is a blocking error (it would drop your data) — the response names the dropped count + a suggested_split. Set true to render the capacity subset anyway (fidelity=verbatim_truncated, never verbatim). Default false."
+            "description": "More items than the form holds blocks (it would drop your data); the response names the dropped count + a suggested_split. true renders the capacity subset (fidelity=verbatim_truncated). Default false."
           },
           "dry_run": {
             "type": "boolean",
@@ -256,7 +256,15 @@
             "type": "number",
             "minimum": 6,
             "maximum": 40,
-            "description": "Binding type floor for prose (exhibit furniture has its own). Type grows to meet it; content that can't fit is a $0 min_font_not_met naming the size needed — allow_truncation renders the fitting subset. Typical: 12."
+            "description": "Binding type floor for prose (exhibit furniture has its own). Type grows to meet it; content that can't fit is a $0 min_font_not_met naming the size needed. Typical: 12."
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "ltr",
+              "rtl"
+            ],
+            "description": "rtl typesets the slide right-to-left (Arabic/Hebrew). Layout is not mirrored. Never inferred — pass it."
           },
           "imagery": {
             "type": "string",
@@ -284,7 +292,7 @@
               "technology",
               "travel"
             ],
-            "description": "Industry bucket for cover/section photos. Omit for the general pool."
+            "description": "Subject/industry: steers cover/section photos AND the topical palette. Omit = general; `education` = teaching."
           },
           "styling": {
             "type": "string",
@@ -292,7 +300,7 @@
               "topical",
               "clean"
             ],
-            "description": "Subject-informed palette + designed cover on default themes (on by default; the design note names the choice). clean = neutral look. Pinned themes never take it."
+            "description": "Topical design on default themes (default on; the note names it): designed cover + a subject palette (from imagery_tag, or the brief). clean = neutral. Pins never take it."
           },
           "force_render": {
             "type": "boolean",
@@ -337,7 +345,9 @@
               "it",
               "pt",
               "nl",
-              "pl"
+              "pl",
+              "ru",
+              "uk"
             ],
             "description": "Target language (default: en)"
           },
@@ -413,12 +423,12 @@
         "ui": {
           "resourceUri": "ui://slideforge/result-card/v19"
         },
-        "openai/outputTemplate": "ui://slideforge/result-card/v19",
+        "openai/outputTemplate": "ui://slideforge/result-card/skybridge/v19",
         "openai/widgetAccessible": true,
         "openai/toolInvocation/invoking": "Generating…",
         "openai/toolInvocation/invoked": "Done"
       },
-      "description": "Create a WHOLE deck in one call: `slides` is a list of create_slide intents (same form menu + data shapes — see create_slide). Slides fill in parallel and merge into one themed PPTX with page numbers. Include furniture: a hero_statement cover, section_divider breaks, and a closing (hero_statement variant=contact_closing via blocks-free slots).\n\nAlso: mode=assemble merges existing slide job_ids as-rendered (free; theme_id does NOT re-theme them — render with create_deck(slides=[…], theme_id=…) for a unified theme); mode=fork clones a deck (free).\nPolling: deck_id == job_id — manage_account(action=job, job_id=<deck_id>).",
+      "description": "Create a complete PowerPoint presentation (.pptx): a whole multi-slide deck, native and editable, in one call. `slides` is a list of create_slide intents (same form menu + data shapes — see create_slide). Slides fill in parallel and merge into one themed PPTX with page numbers. Include furniture: a hero_statement cover, section_divider breaks, and a closing (hero_statement variant=contact_closing via blocks-free slots).\n\nBLOCKED ($0)? If an error has `can_autofix:true`, merge its `patch` into the args at `patch_target`. Unchanged retries repeat the block. New form: browse_catalog(type=schema) first.\n\n\n\nAlso: mode=assemble merges existing slide job_ids as-rendered (free; theme_id does NOT re-theme them — render with create_deck(slides=[…], theme_id=…) for a unified theme); mode=fork clones a deck (free).\nPolling: deck_id == job_id — manage_account(action=job, job_id=<deck_id>).",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -442,6 +452,34 @@
               "clean"
             ],
             "description": "Deck-level topical-design switch, inherited by every slide (a slide-level styling wins). See create_slide.styling."
+          },
+          "imagery": {
+            "type": "string",
+            "enum": [
+              "photo",
+              "wash",
+              "off"
+            ],
+            "description": "Deck-level imagery mode, inherited by every slide (a slide-level imagery wins). See create_slide.imagery."
+          },
+          "imagery_tag": {
+            "type": "string",
+            "enum": [
+              "general",
+              "agriculture",
+              "construction",
+              "education",
+              "energy",
+              "finance",
+              "government",
+              "healthcare",
+              "logistics",
+              "manufacturing",
+              "retail",
+              "technology",
+              "travel"
+            ],
+            "description": "Deck-level subject declaration, inherited by every slide (a slide-level imagery_tag wins). Declare it once for a whole deck. See create_slide.imagery_tag."
           },
           "force_render": {
             "type": "boolean",
@@ -519,7 +557,9 @@
               "it",
               "pt",
               "nl",
-              "pl"
+              "pl",
+              "ru",
+              "uk"
             ],
             "description": "Target language"
           },
@@ -561,12 +601,12 @@
         "ui": {
           "resourceUri": "ui://slideforge/result-card/v19"
         },
-        "openai/outputTemplate": "ui://slideforge/result-card/v19",
+        "openai/outputTemplate": "ui://slideforge/result-card/skybridge/v19",
         "openai/widgetAccessible": true,
         "openai/toolInvocation/invoking": "Generating…",
         "openai/toolInvocation/invoked": "Done"
       },
-      "description": "Translate a PPTX deck preserving all formatting. $0.02/slide. Supports 32 languages (Latin, Cyrillic, Greek scripts). Provide job_id (from a previous create_slide/create_deck), pptx_url, or pptx_base64.",
+      "description": "Translate a PowerPoint (.pptx) deck preserving all formatting. $0.02/slide. Supports 32 languages (Latin, Cyrillic, Greek scripts). Provide job_id (from a previous create_slide/create_deck), pptx_url, or pptx_base64.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -664,20 +704,20 @@
         "idempotentHint": false,
         "openWorldHint": false,
         "cost": {
-          "usd": "0-0.05",
-          "note": "free for logo/theme/image upload; $0.05 for generate_image; +$0.02/slide when translating"
+          "usd": "0-0.10",
+          "note": "free for logo/theme/image upload; $0.05 for generate_image; $0.10 for recreate (refusals free); +$0.02/slide when translating"
         }
       },
       "_meta": {
         "ui": {
           "resourceUri": "ui://slideforge/result-card/v19"
         },
-        "openai/outputTemplate": "ui://slideforge/result-card/v19",
+        "openai/outputTemplate": "ui://slideforge/result-card/skybridge/v19",
         "openai/widgetAccessible": true,
         "openai/toolInvocation/invoking": "Generating…",
         "openai/toolInvocation/invoked": "Done"
       },
-      "description": "Upload a logo, theme PPTX, image, or document — or AI-generate an image.\n\nPurposes:\n• logo — company logo for chrome (PNG/JPG/SVG, max 5MB) → logo_id\n• image — image for the Image component (max 10MB) → asset_id\n• theme — company template PPTX → theme_id; slides with it render NATIVELY on the template (masters/layouts/chrome)\n• generate_image — AI-generate via `prompt` → asset_id ($0.05)\n• translate — PPTX to translate → deck job_id ($0.02/slide; requires `target_language`)\n• pdf — PDF → editable slides; pass `target_language` to also translate\n\nFor files >3MB on purpose=pdf, purpose=translate, or purpose=theme, omit `data` — a drop-zone appears in the result card and bytes never pass through the agent.",
+      "description": "Upload assets for PowerPoint (.pptx) generation: company template, logo, image, or document — or AI-generate an image.\n\nPurposes:\n• logo — company logo for chrome (PNG/JPG/SVG, max 5MB) → logo_id\n• image — image for the Image component (max 10MB) → asset_id\n• theme — company template PPTX → theme_id; slides with it render NATIVELY on the template (masters/layouts/chrome)\n• generate_image — AI-generate via `prompt` → asset_id ($0.05)\n• translate — PPTX to translate → deck job_id ($0.02/slide; requires `target_language`)\n• pdf — PDF → editable slides; pass `target_language` to also translate\n• recreate — image OF a slide → editable PPTX slide ($0.10; honest annotate/preserve fallback, refusals free). Use `image` to just place a picture\n\nFiles >3MB (pdf/translate/theme) — and recreate on chat hosts — omit `data`: a drop-zone appears in the result card; bytes never pass through the agent.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -689,7 +729,8 @@
               "theme",
               "generate_image",
               "translate",
-              "pdf"
+              "pdf",
+              "recreate"
             ],
             "description": "Asset type (required)"
           },
@@ -792,7 +833,7 @@
           "note": "free"
         }
       },
-      "description": "Account info, billing, job history, feedback, and data controls. All free.\nActions: status (balance+plan), usage (spend breakdown), jobs (history), job (single job detail — slide jobs include `quality_warnings[]`; deck jobs add `slides_completed/slides_failed/failed_slides[]`), feedback (submit), onboarding (capabilities overview), webhooks/webhook_add/webhook_remove/webhook_test (register a push endpoint so you don't poll async jobs to terminal), download_url (mint a fresh short-TTL single-use PPTX download link for an owned job — use when a result carries no inline URL), security_status (retention + access-model + deletion posture), delete_job (irreversibly delete a job + all versions + their files)\nAction delete_asset irreversibly deletes a user-owned uploaded/generated image asset.",
+      "description": "SlideForge account for PowerPoint generation: balance, billing, job history, feedback, data controls. All free.\nActions: status (balance+plan), usage (spend breakdown), jobs (history), job (single job detail — slide jobs include `quality_warnings[]`; deck jobs add `slides_completed/slides_failed/failed_slides[]`), feedback (submit), onboarding (capabilities overview), topup (Stripe checkout link; wallet credits automatically), webhooks/webhook_add/webhook_remove/webhook_test (register a push endpoint so you don't poll async jobs to terminal), download_url (mint a fresh short-TTL single-use PPTX download link for an owned job — use when a result carries no inline URL), security_status (retention + access-model + deletion posture), delete_job (irreversibly delete a job + all versions + their files)\nAction delete_asset irreversibly deletes a user-owned uploaded/generated image asset.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -806,6 +847,7 @@
               "download_url",
               "feedback",
               "onboarding",
+              "topup",
               "reports",
               "webhooks",
               "webhook_add",
@@ -815,7 +857,7 @@
               "delete_job",
               "delete_asset"
             ],
-            "description": "Operation (required). reports → list report types; webhook_add registers a push endpoint instead of polling — see the url/events props. delete_job is irreversible. delete_asset is irreversible for user-owned image assets."
+            "description": "Operation (required). feedback → report a defect or request against a render; pass job_id so it is actionable, and ask the user before filing. topup → mints a Stripe checkout link the user pays at directly (wallet credits automatically) — use when a render is refused for balance. reports → list report types; webhook_add registers a push endpoint instead of polling — see the url/events props. delete_job is irreversible. delete_asset is irreversible for user-owned image assets."
           },
           "job_id": {
             "type": "string",
@@ -835,15 +877,44 @@
           },
           "message": {
             "type": "string",
-            "description": "Feedback text (for action=feedback)"
+            "description": "What went wrong or what you want, in the user's own words (for action=feedback)."
           },
           "category": {
             "type": "string",
-            "description": "Feedback category (for action=feedback): bug/feature_request/quality/general"
+            "enum": [
+              "layout",
+              "typography",
+              "contrast",
+              "content",
+              "icons",
+              "images",
+              "theme",
+              "chrome",
+              "consistency",
+              "bug",
+              "feature_request",
+              "testimonial",
+              "general",
+              "other"
+            ],
+            "description": "Feedback category (for action=feedback). The first nine are slide-quality categories — pair them with job_id."
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "bug",
+              "quality",
+              "suggestion"
+            ],
+            "description": "For action=feedback: `bug` = it is broken, `quality` = it rendered but reads poorly, `suggestion` = a request. Defaults to suggestion, so file real defects explicitly or they are triaged as wishes."
           },
           "days": {
             "type": "integer",
             "description": "Lookback period (for action=usage, default 30)"
+          },
+          "amount": {
+            "type": "number",
+            "description": "USD top-up amount (for action=topup, default 10, min 10, max 1000). Volume bonus: $50→+10%, $100→+15%, $200→+20%."
           },
           "detail": {
             "type": "boolean",
