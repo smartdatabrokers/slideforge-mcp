@@ -238,6 +238,7 @@ The self-review loop (render → view inline preview → fix → re-render) is d
 - Website: [slideforge.dev](https://slideforge.dev) · Pricing: [/pricing](https://slideforge.dev/pricing) · Trust & honesty layer: [/trust](https://slideforge.dev/trust)
 - Docs: [REST](https://slideforge.dev/docs/api) · [MCP](https://slideforge.dev/docs/mcp) · [Quickstart](https://slideforge.dev/docs/quickstart) · [Deck Doctor](https://slideforge.dev/docs/api/inspect)
 - Smithery: [smartdatabrokers/slideforge](https://smithery.ai/servers/smartdatabrokers/slideforge)
+- X / Twitter: [@slideforgedev](https://x.com/slideforgedev)
 
 ## License
 

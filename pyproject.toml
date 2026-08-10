@@ -28,6 +28,7 @@ dev = [
 Homepage = "https://slideforge.dev"
 Repository = "https://github.com/smartdatabrokers/slideforge-mcp"
 Documentation = "https://slideforge.dev/docs/mcp"
+"X (Twitter)" = "https://x.com/slideforgedev"
 
 [project.scripts]
 slideforge-mcp = "slideforge_mcp.server:main"
