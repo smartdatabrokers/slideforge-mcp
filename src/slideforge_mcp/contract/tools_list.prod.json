@@ -1,7 +1,7 @@
 {
   "_comment": "Source of truth for the local wrapper's tool surface. Captured verbatim from the PROD served MCP tools/list. Regenerate + cut a release when the served surface changes (see tests/test_contract_parity.py).",
   "_source": "https://api.slideforge.dev/mcp/ tools/list",
-  "_captured": "2026-08-07",
+  "_captured": "2026-08-10",
   "tools": [
     {
       "name": "browse_catalog",
@@ -483,11 +483,11 @@
           },
           "force_render": {
             "type": "boolean",
-            "description": "If any slide is completed_with_errors, deck pptx_url is null. Set true to get it anyway; complete slides stay downloadable via their per-slide job_id either way. No cost/status effect."
+            "description": "IGNORED (deck-level). pptx_url is always returned when at least one slide rendered, so there is nothing to force. Still meaningful on create_slide."
           },
           "allow_partial": {
             "type": "boolean",
-            "description": "Non-regret default: if any slide fails, the deck is NOT billed (cost:0) and pptx withheld — the response carries repair_actions (assemble the completed children, free). Set true to render + bill the completed slides and get the partial deck. Default false."
+            "description": "IGNORED. A deck bills per rendered slide and always returns its pptx; slides that failed or rendered badly are free and named in repair_actions."
           },
           "strict_policy": {
             "type": "object",
@@ -957,6 +957,9 @@
         "required": [
           "action"
         ]
+      },
+      "_meta": {
+        "openai/widgetAccessible": true
       }
     }
   ]

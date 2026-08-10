@@ -2,6 +2,23 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.7.0 — 2026-08-10
+
+- **Contract refresh for API `v5.165.0` — content finds its home.** Two new
+  `hero_statement` variants: `visual_statement` (a key-message CONTENT slide — one
+  decisive statement + a supporting image panel + up to 4 topic blocks) and
+  `references_list` (the deck-closing bibliography: up to 8 sources with venue/year
+  and DOI/URL). A `hero_statement` pin that carries real content may now return a
+  non-blocking `better_home` warning naming the content form that lays it out
+  properly (`suggested_form` + remedy) — the pin still renders; the choice stays
+  with the caller.
+- `create_deck` guidance now maps each deck slide job to its right form (case →
+  `case_story`, definition → `editorial_split`, conclusion → `takeaway_stack`,
+  metric targets → `kpi_metrics`, key message → `visual_statement`, references →
+  `references_list`). Content packed onto a plain cover renders as furniture.
+- Rolls up served-schema deltas since 5.6.0: `create_deck` `allow_partial` /
+  `force_render` description clarifications, `manage_account` `_meta` note.
+
 ## 5.6.0 — 2026-08-07
 
 - **Contract refresh for API `v5.154.0` — in-chat top-up.** `manage_account` gains
