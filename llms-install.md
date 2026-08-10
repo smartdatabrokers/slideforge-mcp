@@ -45,7 +45,7 @@ This is a remote MCP server. No local installation required.
 - `create_slide` — structured intent (form + typed fields, binds verbatim) or brief; `mode=code` for sandboxed python-pptx; every response carries a fidelity manifest
 - `create_deck` — multi-slide parallel render into one merged .pptx (failed slides isolated + free)
 - `plan_slide` — brief → ranked form/variant candidates (free)
-- `browse_catalog` — 150+ patterns with JSON Schemas + example intents, themes, code-mode widgets (free)
+- `browse_catalog` — 200+ patterns with JSON Schemas + example intents, themes, code-mode widgets (free)
 - `translate_deck` — PPTX translation, 32 languages, formatting preserved ($0.02/slide)
 - `upload_asset` — logos, themes, images; `purpose=pdf` extracts PDFs into editable intents
 - `manage_account` — balance, usage, jobs, feedback, security status (free)

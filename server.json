@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "dev.slideforge/slideforge",
   "title": "SlideForge",
-  "description": "Deterministic, fully editable PowerPoint from typed slide intents. 150+ layouts, brand templates.",
+  "description": "Deterministic, fully editable PowerPoint from typed slide intents. 200+ layouts, brand templates.",
   "version": "5.7.0",
   "repository": {
     "url": "https://github.com/smartdatabrokers/slideforge-mcp",

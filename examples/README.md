@@ -91,7 +91,7 @@ Then hand `tools` to a `FunctionAgent` (see the example file).
 | `create_slide` | One slide from a typed intent (`form` + fields) or a brief | $0.05 |
 | `create_deck` | Whole deck, rendered in parallel | N × $0.05 |
 | `plan_slide` | Brief → best form/variant, creates nothing | **Free** |
-| `browse_catalog` | 150+ layouts + their exact payload schemas | **Free** |
+| `browse_catalog` | 200+ layouts + their exact payload schemas | **Free** |
 | `translate_deck` · `upload_asset` · `manage_account` | Localize · assets/PDF→deck · wallet & jobs | varies |
 
 **Let the agent discover the layout:** `plan_slide` and `browse_catalog` are free, so an agent can find

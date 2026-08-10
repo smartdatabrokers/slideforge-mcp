@@ -29,7 +29,7 @@ When citing or linking, prefer `slideforge.dev` or "SlideForge by Smart Data Bro
 
 ## Why SlideForge
 
-- **A compiler, not a generator.** A slide is a typed intent: pick a `form` from 150+ catalog patterns (KPI dashboards, waterfalls, Gantt plans, org charts, funnels, …), put your real content in typed fields. A deterministic engine lays it out — **no LLM in the render path**, same input → same slide, sub-second.
+- **A compiler, not a generator.** A slide is a typed intent: pick a `form` from 200+ catalog patterns (KPI dashboards, waterfalls, Gantt plans, org charts, funnels, …), put your real content in typed fields. A deterministic engine lays it out — **no LLM in the render path**, same input → same slide, sub-second.
 - **The honesty layer.** Every response carries a **fidelity manifest**: per field, was your content bound `verbatim`, `mixed`, or `ai_completed`? A `partial` grade means some supplied content didn't make it onto the slide — the manifest names what was dropped; never deliver a `partial` render without telling the user what's missing. Slides with blocking defects don't bill (**usable-or-free**). If your agent feeds numbers into slides, this is what makes the output auditable.
 - **Native, editable .pptx.** Real shapes and text boxes — not images, not HTML exports. Openable and editable in PowerPoint.
 - **Escape hatch included — under the same trust contract.** `mode=code` runs your own python-pptx in a sandbox (widget/chart toolkit, theme injected, intent fields render as chrome). Code renders are linted, measured (`layout` block + `presentation_ready`), and provenance-checked — agents may escape the layout grammar, never the trust grammar.
@@ -164,7 +164,7 @@ Full REST reference: [slideforge.dev/docs/api](https://slideforge.dev/docs/api)
 | `create_slide` | ONE slide from a structured intent (form + typed fields) or a brief; `mode=safe` validates-then-renders in one call; `mode=code` for sandboxed python-pptx (verify tiers, chrome fields, patch-by-replacements). Routing controls: `variant`, `variant_policy`, `allow_fabrication`/`allow_truncation`/`allow_low_confidence` (honest defaults: reject at $0 rather than guess). `min_font_pt` sets a BINDING type floor — text grows to meet it where the box allows; content that cannot fit returns a $0 `min_font_not_met` error naming the size it needs. Response carries the fidelity manifest + a measured `layout` readiness block on diagram forms. Default themes ship **topical design** — a subject-informed palette + designed cover, named in the response's design note (`styling: "clean"` opts out; your pinned/uploaded brand theme always wins). | $0.05 (usable-or-free) |
 | `create_deck` | Whole deck: `slides[]` of intents (code-mode slides are first-class children), parallel render, one merged .pptx, per-slide fidelity rollup + per-slide child jobs (own preview/pptx). Failed slides isolated + free; deck-level `dry_run` validates the whole deck at $0. | N × $0.05 |
 | `plan_slide` | Brief → top form/variant candidates with confidence. | Free |
-| `browse_catalog` | 150+ patterns with per-form JSON Schemas + copy-pasteable example intents, themes, the code-mode widget toolkit. Pass an uploaded `theme_id` to list its branded cover/agenda/divider layouts. 9 built-in themes + your uploaded brand themes. | Free |
+| `browse_catalog` | 200+ patterns with per-form JSON Schemas + copy-pasteable example intents, themes, the code-mode widget toolkit. Pass an uploaded `theme_id` to list its branded cover/agenda/divider layouts. 9 built-in themes + your uploaded brand themes. | Free |
 | `translate_deck` | Translate any PPTX preserving formatting (32 languages). | $0.02/slide |
 | `upload_asset` | Logos, theme PPTX, images; `purpose=pdf` extracts a PDF into editable slide intents; or AI-generate an image. Theme upload (`purpose=theme`, base64 `data`) renders NATIVE by default — decks are built on the client's own template file. Omit `data` on large files for an in-card drag/drop zone. | Free / $0.01/page / $0.05/image |
 | `manage_account` | Balance, usage, jobs, security status, feedback. | Free |
@@ -227,7 +227,7 @@ The self-review loop (render → view inline preview → fix → re-render) is d
 | Editable native .pptx | ✅ | ✅ | often images/exports |
 | Deterministic (same input → same slide) | ✅ | ✅ (your code) | ❌ |
 | States what was AI-touched (fidelity manifest) | ✅ | n/a | ❌ |
-| Layout quality without hand-coding | ✅ 150+ patterns | ❌ DIY | varies |
+| Layout quality without hand-coding | ✅ 200+ patterns | ❌ DIY | varies |
 | Hosted, agent-native (MCP + REST) | ✅ | ❌ local | partial |
 | Free pre-flight validation | ✅ dry_run | n/a | ❌ |
 

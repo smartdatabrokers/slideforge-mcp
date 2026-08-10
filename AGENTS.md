@@ -2,7 +2,7 @@
 
 SlideForge (slideforge.dev, by Smart Data Brokers GmbH) turns typed slide intents into native,
 fully editable PowerPoint files. It is a **compiler, not a generator**: a deterministic engine
-renders 150+ catalog patterns from structured content — no LLM in the render path — and every
+renders 200+ catalog patterns from structured content — no LLM in the render path — and every
 response carries a **fidelity manifest** stating what was bound verbatim vs. model-completed.
 Copy this file (or its rules) into a project where an agent produces .pptx deliverables.
 

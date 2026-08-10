@@ -15,7 +15,7 @@ usable-or-free; identical input re-renders free.
 
 ## The reliable path (use for real content)
 
-1. **Pick the form.** `browse_catalog` lists 150+ patterns (kpi_metrics, waterfall_bridge,
+1. **Pick the form.** `browse_catalog` lists 200+ patterns (kpi_metrics, waterfall_bridge,
    gantt_plan, funnel, org_structure, data_table, comparison_matrix, timeline_roadmap, …).
    Unsure? `plan_slide` with a one-line brief returns ranked candidates, free.
 2. **Get the contract.** `browse_catalog` with `type=schema` + the form returns the JSON Schema
