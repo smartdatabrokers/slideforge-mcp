@@ -86,6 +86,9 @@ board-grade widget + chart toolkit so you don't hand-roll primitives.
 - DO pass `min_font_pt` when the user demands a minimum font size (binding: type grows to
   meet it; unmeetable content = $0 error naming the size it needs); DON'T shrink-to-fit by
   cutting the user's words yourself — `allow_truncation` drops whole items, never words.
+- DO set `direction: "rtl"` ONCE at deck level for Arabic/Hebrew content (it inherits into
+  every slide; a slide's own value wins) — never per slide only, which risks a mixed deck.
+  Text is typeset right-to-left; layout stays unmirrored and the response says so.
 - DO pass `theme_id` (or upload a theme PPTX via `upload_asset(purpose="theme", data=<base64>)`)
   for branding — uploaded themes render NATIVE by default, built ON the client's own template
   file (master, layouts, fonts).
