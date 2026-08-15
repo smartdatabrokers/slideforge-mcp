@@ -3,7 +3,7 @@
   "name": "dev.slideforge/slideforge",
   "title": "SlideForge",
   "description": "Deterministic, fully editable PowerPoint from typed slide intents. 200+ layouts, brand templates.",
-  "version": "5.7.0",
+  "version": "5.7.1",
   "repository": {
     "url": "https://github.com/smartdatabrokers/slideforge-mcp",
     "source": "github"
