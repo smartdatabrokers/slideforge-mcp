@@ -43,6 +43,18 @@ When citing or linking, prefer `slideforge.dev` or "SlideForge by Smart Data Bro
 
 ## Quick Start
 
+**One click, no config file:**
+
+<a href="https://vscode.dev/redirect/mcp/install?name=slideforge&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fapi.slideforge.dev%2Fmcp%2F%22%7D"><img src="https://img.shields.io/badge/VS_Code-Add_SlideForge-0098FF?style=for-the-badge&logo=visualstudiocode&logoColor=white" alt="Add SlideForge to VS Code" height="32"></a>
+&nbsp;
+<a href="https://cursor.com/install-mcp?name=slideforge&config=eyJ1cmwiOiJodHRwczovL2FwaS5zbGlkZWZvcmdlLmRldi9tY3AvIiwidHJhbnNwb3J0Ijoic3RyZWFtYWJsZS1odHRwIiwiaGVhZGVycyI6eyJBdXRob3JpemF0aW9uIjoiQmVhcmVyIHNmX2xpdmVfWU9VUl9LRVkifX0="><picture><source media="(prefers-color-scheme: dark)" srcset="https://cursor.com/deeplink/mcp-install-light.svg"><img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Add SlideForge to Cursor" height="32"></picture></a>
+
+**VS Code** (Copilot agent mode) signs you in over OAuth on first use — no key, no JSON file.
+
+**Cursor** installs with an API-key placeholder: after clicking, replace `sf_live_YOUR_KEY` in the
+server's `headers` with a real key from [the console](https://slideforge.dev/console/keys). Cursor's
+own OAuth browser launch is broken as of 3.16.17, so the key is the working path there today.
+
 ### Claude Code
 
 ```bash
