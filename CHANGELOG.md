@@ -2,6 +2,18 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.8.0 — 2026-08-24
+
+- **Contract refresh for API `v5.212.0` — right-to-left decks and a larger menu.**
+  `create_deck` gains the `direction` parameter (`rtl` typesets every slide
+  right-to-left for Arabic/Hebrew decks — never inferred, pass it explicitly),
+  matching the parameter `create_slide` already had; `create_slide`'s `direction`
+  description is aligned with it.
+- `create_slide`'s form menu picks up the families shipped since 5.7.0, including
+  `exercise_prompt` (classroom exercises with a task prompt, definitions and rules).
+- Snapshot captured from the served surface on 2026-08-24; the weekly published-
+  surface parity sweep is what flagged the drift.
+
 ## 5.7.0 — 2026-08-10
 
 - **Contract refresh for API `v5.165.0` — content finds its home.** Two new
