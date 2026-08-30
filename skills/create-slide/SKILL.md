@@ -89,9 +89,10 @@ board-grade widget + chart toolkit so you don't hand-roll primitives.
 - DO set `direction: "rtl"` ONCE at deck level for Arabic/Hebrew content (it inherits into
   every slide; a slide's own value wins) — never per slide only, which risks a mixed deck.
   Text is typeset right-to-left; layout stays unmirrored and the response says so.
-- DO pass `theme_id` (or upload a theme PPTX via `upload_asset(purpose="theme", data=<base64>)`)
-  for branding — uploaded themes render NATIVE by default, built ON the client's own template
-  file (master, layouts, fonts).
+- DO pass `theme_id` (or upload a brand kit template via `upload_asset(purpose="brand",
+  data=<base64>)` — `purpose="theme"` is the same path under its old name, still accepted) for
+  branding — uploaded brand kits render NATIVE by default, built ON the client's own template
+  file (master, layouts, fonts). `<slug>@<n>` pins a specific kit version.
 - DO use `create_slide(form="template_layout", theme_id=..., data={"layout": ..., "fills": ...})`
   to fill the template's own designed cover/agenda/divider slides verbatim.
 - DO expect topical design on the default themes: an unpinned render may take a subject-informed

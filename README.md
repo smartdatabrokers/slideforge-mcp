@@ -176,16 +176,35 @@ Full REST reference: [slideforge.dev/docs/api](https://slideforge.dev/docs/api)
 | `create_slide` | ONE slide from a structured intent (form + typed fields) or a brief; `mode=safe` validates-then-renders in one call; `mode=code` for sandboxed python-pptx (verify tiers, chrome fields, patch-by-replacements). Routing controls: `variant`, `variant_policy`, `allow_fabrication`/`allow_truncation`/`allow_low_confidence` (honest defaults: reject at $0 rather than guess). `min_font_pt` sets a BINDING type floor — text grows to meet it where the box allows; content that cannot fit returns a $0 `min_font_not_met` error naming the size it needs. Response carries the fidelity manifest + a measured `layout` readiness block on diagram forms. Default themes ship **topical design** — a subject-informed palette + designed cover, named in the response's design note (`styling: "clean"` opts out; your pinned/uploaded brand theme always wins). | $0.05 (usable-or-free) |
 | `create_deck` | Whole deck: `slides[]` of intents (code-mode slides are first-class children), parallel render, one merged .pptx, per-slide fidelity rollup + per-slide child jobs (own preview/pptx). Failed slides isolated + free; deck-level `dry_run` validates the whole deck at $0. Deck-level `language`, `direction` (`rtl` for Arabic/Hebrew — typeset right-to-left, layout unmirrored + honestly warned), `imagery`/`imagery_tag`, `styling` and `logo_id` inherit into every slide; a slide's own value wins. | N × $0.05 |
 | `plan_slide` | Brief → top form/variant candidates with confidence. | Free |
-| `browse_catalog` | 200+ patterns with per-form JSON Schemas + copy-pasteable example intents, themes, the code-mode widget toolkit. Pass an uploaded `theme_id` to list its branded cover/agenda/divider layouts. 9 built-in themes + your uploaded brand themes. | Free |
+| `browse_catalog` | 200+ patterns with per-form JSON Schemas + copy-pasteable example intents, themes, the code-mode widget toolkit. Pass an uploaded `theme_id` to list its branded cover/agenda/divider layouts. `type=brands` lists your brand kits with their versions. 9 built-in themes + your uploaded brand kits. | Free |
 | `translate_deck` | Translate any PPTX preserving formatting (32 languages). | $0.02/slide |
-| `upload_asset` | Logos, theme PPTX, images; `purpose=pdf` extracts a PDF into editable slide intents; or AI-generate an image. Theme upload (`purpose=theme`, base64 `data`) renders NATIVE by default — decks are built on the client's own template file. Omit `data` on large files for an in-card drag/drop zone. | Free / $0.01/page / $0.05/image |
-| `manage_account` | Balance, usage, jobs, security status, feedback. | Free |
+| `upload_asset` | Logos, brand template PPTX, images; `purpose=pdf` extracts a PDF into editable slide intents (PowerPoint/Keynote/Google-Slides/Beamer-exported PDFs only — other sources aren't supported yet); or AI-generate an image. Brand template upload (`purpose=brand` — `purpose=theme` is the same thing under its old name, still accepted) renders NATIVE by default — decks are built on the client's own template file. Omit `data` on large files for an in-card drag/drop zone. | Free / $0.01/page / $0.05/image |
+| `manage_account` | Balance, usage, jobs, security status, feedback, `action=feedback_list` to read your filed reports back, `action=brand_report` for a brand kit's per-token fidelity report. | Free |
 
 `dry_run: true` on create tools = validation + fidelity forecast at $0.
 
 Two more tools (`generate_report`, `manage_connections` — data-driven reports from connected tools like Zoho Sprints) exist behind an enterprise gate and are not served by default.
 
 **Also on REST (for now): the Deck Doctor.** `POST /v1/inspect` — a free deterministic Deck Quality Report for **any** pptx (overflow via real font metrics, content hidden behind shapes, off-canvas leftovers, WCAG contrast). `POST /v1/repair` — deterministic fixes, never your words, $0.02/repaired slide, free dry-run quote. [Docs](https://slideforge.dev/docs/api/inspect)
+
+---
+
+## Brand kits
+
+A brand kit is your org's identity — colors, type, logo, and (optionally) an uploaded
+`.pptx`/`.potx`/`.thmx` template — stored under a slug and rendered against on every call.
+
+- **Use one**: pass `theme_id=<slug>` to `create_slide`/`create_deck` for the kit's default
+  version, or `<slug>@<n>` to pin a specific version.
+- **Create one**: `upload_asset(purpose="brand", data=<base64 .pptx/.potx/.thmx>)` — decks then
+  render NATIVE, built on your own template file. (`purpose="theme"` is the same path under its
+  old name and still works.)
+- **Discover**: `browse_catalog(type="brands")` lists your kits with their versions.
+- **Check fidelity**: `manage_account(action="brand_report", theme_id=<slug>)` returns the
+  per-token fidelity report for a kit.
+- **Export or import from a URL**: full kit CRUD, DTCG `tokens.json`/`.potx`/`.thmx` export, and
+  importing an identity straight from a company's domain are REST-only today —
+  [`/v1/brands`](https://slideforge.dev/docs/api) (not yet mirrored as MCP tools).
 
 ---
 

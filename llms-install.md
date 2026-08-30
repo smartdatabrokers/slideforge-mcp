@@ -45,11 +45,11 @@ This is a remote MCP server. No local installation required.
 - `create_slide` — structured intent (form + typed fields, binds verbatim) or brief; `mode=code` for sandboxed python-pptx; every response carries a fidelity manifest
 - `create_deck` — multi-slide parallel render into one merged .pptx (failed slides isolated + free)
 - `plan_slide` — brief → ranked form/variant candidates (free)
-- `browse_catalog` — 200+ patterns with JSON Schemas + example intents, themes, code-mode widgets (free)
+- `browse_catalog` — 200+ patterns with JSON Schemas + example intents, themes, code-mode widgets, `type=brands` for your brand kits (free)
 - `translate_deck` — PPTX translation, 32 languages, formatting preserved ($0.02/slide)
-- `upload_asset` — logos, themes, images; `purpose=pdf` extracts PDFs into editable intents
-- `manage_account` — balance, usage, jobs, feedback, security status (free)
-- REST-only: free `POST /v1/inspect` (Deck Quality Report for any pptx) + `POST /v1/repair`
+- `upload_asset` — logos, brand template PPTX, images; `purpose=pdf` extracts PDFs into editable intents ($0.01/page — PowerPoint/Keynote/Google-Slides/Beamer-exported PDFs only today); `purpose=brand` uploads a brand kit template (`purpose=theme` is the same thing under its old name, still accepted)
+- `manage_account` — balance, usage, jobs, feedback (`action=feedback_list` reads your filed reports back), security status, `action=brand_report` for a brand kit's fidelity report (free)
+- REST-only: free `POST /v1/inspect` (Deck Quality Report for any pptx) + `POST /v1/repair`; brand-kit export/import (`/v1/brands`)
 
 Pricing: creating a slide $0.05 · transforming $0.02 (translate, repair) · checking free
 (dry_run, plan, inspect). 60 free slides on signup. Machine-readable: GET /v1/pricing

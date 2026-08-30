@@ -1,7 +1,7 @@
 {
   "_comment": "Source of truth for the local wrapper's tool surface. Captured verbatim from the PROD served MCP tools/list. Regenerate + cut a release when the served surface changes (see tests/test_contract_parity.py).",
   "_source": "https://api.slideforge.dev/mcp/ tools/list",
-  "_captured": "2026-08-24",
+  "_captured": "2026-08-30",
   "tools": [
     {
       "name": "browse_catalog",
@@ -43,7 +43,7 @@
           },
           "type": {
             "type": "string",
-            "description": "Omit for the form overview (or family=/q= to drill in). schema (+family, optionally +variant=) = schema-first discovery: family only returns a compact variant chooser; family+variant returns that variant's exact machine-readable payload contract (JSON Schema for data, capacity limits, intent-field mapping, examples). widgets = the add_widget() catalog for mode=code (name=<widget> for its contract). helpers = python-pptx helper signatures. themes = list themes (built-in + your saved); Default appears first and can be omitted, or use any returned id as theme_id."
+            "description": "Omit for the form overview (or family=/q= to drill in). schema (+family, optionally +variant=) = schema-first discovery: family only returns a compact variant chooser; family+variant returns that variant's exact machine-readable payload contract (JSON Schema for data, capacity limits, intent-field mapping, examples). widgets = the add_widget() catalog for mode=code (name=<widget> for its contract). helpers = python-pptx helper signatures. themes = list themes (built-in + your saved); Default appears first and can be omitted, or use any returned id as theme_id. brands = your brand kits with versions (theme_id=<slug> renders the default version, <slug>@<n> pins n)."
           },
           "name": {
             "type": "string",
@@ -735,12 +735,13 @@
               "logo",
               "image",
               "theme",
+              "brand",
               "generate_image",
               "translate",
               "pdf",
               "recreate"
             ],
-            "description": "Asset type (required)"
+            "description": "Asset type (required). brand = a .pptx/.potx corporate template imported as your brand kit (theme is the same thing under its old name)."
           },
           "data": {
             "type": "string",
@@ -841,7 +842,7 @@
           "note": "free"
         }
       },
-      "description": "SlideForge account for PowerPoint generation: balance, billing, job history, feedback, data controls. All free.\nActions: status (balance+plan), usage (spend breakdown), jobs (history), job (single job detail — slide jobs include `quality_warnings[]`; deck jobs add `slides_completed/slides_failed/failed_slides[]`), feedback (submit), onboarding (capabilities overview), topup (Stripe checkout link; wallet credits automatically), webhooks/webhook_add/webhook_remove/webhook_test (register a push endpoint so you don't poll async jobs to terminal), download_url (mint a fresh short-TTL single-use PPTX download link for an owned job — use when a result carries no inline URL), security_status (retention + access-model + deletion posture), delete_job (irreversibly delete a job + all versions + their files)\nAction delete_asset irreversibly deletes a user-owned uploaded/generated image asset.",
+      "description": "SlideForge account for PowerPoint generation: balance, billing, job history, feedback, data controls. All free.\nActions: status (balance+plan), usage (spend breakdown), jobs (history), job (single job detail — slide jobs include `quality_warnings[]`; deck jobs add `slides_completed/slides_failed/failed_slides[]`), feedback (submit), feedback_list (read your reports back: status + resolution), onboarding (capabilities overview), topup (Stripe checkout link; wallet credits automatically), webhooks/webhook_add/webhook_remove/webhook_test (push endpoint instead of polling to terminal), download_url (fresh short-TTL PPTX link for an owned job — when a result carries no inline URL), security_status (retention + access-model + deletion posture), delete_job (irreversible: job + versions + files)\nAction delete_asset irreversibly deletes a user-owned uploaded/generated image asset.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -854,8 +855,10 @@
               "job",
               "download_url",
               "feedback",
+              "feedback_list",
               "onboarding",
               "topup",
+              "brand_report",
               "reports",
               "webhooks",
               "webhook_add",
@@ -865,7 +868,7 @@
               "delete_job",
               "delete_asset"
             ],
-            "description": "Operation (required). feedback → report a defect or request against a render; pass job_id so it is actionable, and ask the user before filing. topup → mints a Stripe checkout link the user pays at directly (wallet credits automatically) — use when a render is refused for balance. reports → list report types; webhook_add registers a push endpoint instead of polling — see the url/events props. delete_job is irreversible. delete_asset is irreversible for user-owned image assets."
+            "description": "Operation (required). feedback → report a defect or request against a render; pass job_id so it is actionable, and ask the user before filing. feedback_list → read YOUR OWN filed reports back, with `status` and the `resolution` written when one was acted on: check it before working around a defect you reported earlier, because it may already be fixed. brand_report → the per-token fidelity report for one of your brand kits (pass theme_id). topup → mints a Stripe checkout link the user pays at directly (wallet credits automatically) — use when a render is refused for balance. reports → list report types; webhook_add registers a push endpoint instead of polling — see the url/events props. delete_job is irreversible. delete_asset is irreversible for user-owned image assets."
           },
           "job_id": {
             "type": "string",
@@ -873,11 +876,11 @@
           },
           "limit": {
             "type": "integer",
-            "description": "Max jobs (for action=jobs, default 10)"
+            "description": "Max rows (action=jobs default 10; action=feedback_list default 50, max 100)"
           },
           "status": {
             "type": "string",
-            "description": "Filter (for action=jobs): queued/generating/complete/failed"
+            "description": "Filter — action=jobs: queued/generating/complete/failed; action=feedback_list: open/resolved"
           },
           "include_children": {
             "type": "boolean",
@@ -905,7 +908,7 @@
               "general",
               "other"
             ],
-            "description": "Feedback category (for action=feedback). The first nine are slide-quality categories — pair them with job_id."
+            "description": "Feedback category (action=feedback to file under it, action=feedback_list to filter by it). The first nine are slide-quality categories — pair them with job_id."
           },
           "severity": {
             "type": "string",

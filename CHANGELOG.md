@@ -2,6 +2,29 @@
 
 All notable changes to the SlideForge MCP server.
 
+## 5.9.0 — 2026-08-30
+
+- **Contract refresh for API `v5.226.0` — brand kits reach the tool surface.**
+  `upload_asset`'s `purpose` gains `brand` (the forward spelling of `theme` — one
+  upload path, two names; `theme` still works) for uploading a `.pptx`/`.potx`/
+  `.thmx` corporate template as a brand kit. `browse_catalog`'s `type` gains
+  `brands`, listing a caller's kits with their versions (`theme_id=<slug>` renders
+  the default version, `<slug>@<n>` pins one). `manage_account` gains
+  `action=brand_report` (a kit's per-token fidelity report) and
+  `action=feedback_list` (read your own filed reports back, with `status` and any
+  `resolution`).
+- README, llms-install.md, AGENTS.md and the `create-slide`/`pdf-to-pptx` skills
+  now document brand kits and prefer `purpose=brand` in examples. Full brand-kit
+  CRUD, DTCG export and URL import stay REST-only (`/v1/brands`) — not yet
+  mirrored as MCP tools.
+- Fixed a real pricing error in `skills/pdf-to-pptx/SKILL.md`: it claimed PDF
+  extraction was free; it has always billed $0.01/page. Also corrected its
+  claim that scanned/image-only PDFs extract as background images — they
+  don't, the upload is rejected (422); only slide-tool-exported PDFs
+  (PowerPoint, Keynote, Google Slides, Beamer, …) are supported today.
+- Snapshot captured from the served surface on 2026-08-30 — additive only, no
+  tools or parameters removed or renamed.
+
 ## 5.8.0 — 2026-08-24
 
 - **Contract refresh for API `v5.212.0` — right-to-left decks and a larger menu.**

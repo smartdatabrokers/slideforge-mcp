@@ -3,7 +3,7 @@
   "name": "dev.slideforge/slideforge",
   "title": "SlideForge",
   "description": "Deterministic, fully editable PowerPoint from typed slide intents. 200+ layouts, brand templates.",
-  "version": "5.8.0",
+  "version": "5.9.0",
   "repository": {
     "url": "https://github.com/smartdatabrokers/slideforge-mcp",
     "source": "github"
@@ -18,7 +18,7 @@
     {
       "registryType": "pypi",
       "identifier": "slideforge-mcp",
-      "version": "5.8.0",
+      "version": "5.9.0",
       "transport": { "type": "stdio" },
       "environmentVariables": [
         {

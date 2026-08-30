@@ -51,10 +51,13 @@ Bearer key. Reference: https://slideforge.dev/docs/api — machine-readable rate
   *successful* input re-renders free (`repeat_of`), so idempotent retries are safe on success.
 - **Decks:** one `create_deck` call, not N `create_slide` calls — parallel render, one merged
   pptx, per-slide manifest rollup.
-- **Branding: upload the user's own template.** `upload_asset(purpose="theme", data=<base64
-  .pptx>)` renders NATIVE by default — the deck is built ON their template file (master,
-  layouts, fonts), not a color-matched imitation. `create_slide(form="template_layout", ...)`
-  fills the template's own designed cover/agenda/divider slides verbatim.
+- **Branding: upload the user's own template as a brand kit.** `upload_asset(purpose="brand",
+  data=<base64 .pptx/.potx/.thmx>)` renders NATIVE by default — the deck is built ON their
+  template file (master, layouts, fonts), not a color-matched imitation. (`purpose="theme"` is
+  the same path under its old name, still accepted.) Pass `theme_id=<slug>` (or `<slug>@<n>` to
+  pin a version) on later renders; `browse_catalog(type="brands")` lists a caller's kits.
+  `create_slide(form="template_layout", ...)` fills the template's own designed cover/agenda/
+  divider slides verbatim.
 - **Client demands a minimum font size?** Pass `min_font_pt` (typical ask: 12). It is BINDING:
   type grows to meet the floor where the box allows; content that cannot fit returns a $0
   `min_font_not_met` error naming the size it actually needs — set `allow_truncation: true`
@@ -66,7 +69,8 @@ Bearer key. Reference: https://slideforge.dev/docs/api — machine-readable rate
   leftovers, WCAG contrast, hidden slides. `POST /v1/repair` applies deterministic fixes
   (never alters words; $0.02 per repaired slide; `dry_run` = free exact quote).
 - **Transform:** `translate_deck` ($0.02/slide, 32 languages, formatting preserved);
-  `upload_asset purpose=pdf` extracts a PDF into editable intents ($0.01/page).
+  `upload_asset purpose=pdf` extracts a PDF into editable intents ($0.01/page —
+  PowerPoint/Keynote/Google-Slides/Beamer-exported PDFs only today; other sources 422).
 - Costs are bounded and machine-readable (`GET /v1/pricing`); trial accounts start with
   60 free slides. Never invent prices in user-facing summaries — read the rate card.
 

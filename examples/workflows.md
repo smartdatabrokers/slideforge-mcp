@@ -19,7 +19,8 @@ $0.05/slide create, $0.02/slide transform, checks free.
 ## 2. Brand it
 
 ```
-→ upload_asset(purpose="theme", data=<base64 corporate.pptx>)   # returns theme_id, free
+→ upload_asset(purpose="brand", data=<base64 corporate.pptx>)   # returns theme_id (brand kit slug), free
+  (`purpose="theme"` is the same path under its old name, still accepted)
   Big file? Omit `data` — the result card shows a drag/drop zone; bytes never pass through the agent.
 → create_deck(slides=[...], theme_id="thm_...")                  # every slide on-brand
   Uploaded themes render NATIVE by default — the deck is built ON the client's own template

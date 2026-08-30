@@ -61,11 +61,14 @@ PowerPoint.
 
 ## Known limits
 
-- Scanned / image-only PDFs extract as single background images per page (no text extraction — no OCR in this path)
+- Only PDFs exported from a slide tool (PowerPoint, Keynote, Google Slides, Canva, LaTeX Beamer,
+  etc.) are supported today — the upload returns a 422 for anything else. Scanned, image-only,
+  and text-document PDFs are not supported yet.
 - Complex SmartArt or animations from the original source (if it came from PPTX → PDF) don't round-trip
 - Very dense CAD-style PDFs may hit shape-count limits
 
-If the user has an image-only PDF and needs OCR, suggest a different flow: OCR the PDF first, then use `create_slide` on the extracted text.
+If the user has a scanned or image-only PDF, tell them it isn't supported yet rather than
+attempting the upload.
 
 ## Free public tool
 
@@ -73,11 +76,11 @@ There's also a free unauthenticated web tool at `https://slideforge.dev/tools/pd
 
 ## Pricing
 
-Authenticated flow: free — included as part of `upload_asset` with `purpose=pdf`. No per-page charge for extraction.
+Authenticated flow: $0.01/page, charged on the pages actually extracted.
 
 ## Anti-patterns
 
-- Don't claim the converter works on image-only PDFs without OCR; it will produce page-sized background images with no editable text.
+- Don't claim the converter works on scanned or image-only PDFs; it doesn't yet — those uploads are rejected.
 - Don't re-run the conversion just to change a theme; the output is raw-extracted. If the user wants restyling, re-render the extracted intents via `create_deck` with a `theme_id`.
 - Don't suggest the free public tool for users with >15-page PDFs or >25 MB files — they'll hit the cap and bounce.
 
