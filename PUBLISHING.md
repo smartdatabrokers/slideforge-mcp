@@ -49,7 +49,8 @@ carries the `mcp-name:` marker).
 ### Publish
 
 ```bash
-mcp-publisher publish --dry-run     # validates schema + package ownership + namespace auth
+# ⚠ `--dry-run` is a NO-OP on mcp-publisher v1.8.1 — it publishes FOR REAL (observed 2026-08-30).
+# There is no safe rehearsal: only run publish when you mean it.
 mcp-publisher publish
 ```
 
