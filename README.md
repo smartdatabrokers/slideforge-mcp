@@ -8,7 +8,7 @@ mcp-name: dev.slideforge/slideforge
 Remote MCP server + REST API. No local install, no Python environment, no `python-pptx` boilerplate. OAuth 2.1 for Claude Desktop & ChatGPT; API key for everything else.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![smithery badge](https://smithery.ai/badge/smartdatabrokers/slideforge)](https://smithery.ai/servers/smartdatabrokers/slideforge)
+[![LightNow MCP capabilities](https://lightnow.ai/badge/dev.slideforge/slideforge)](https://lightnow.ai/servers/dev.slideforge/slideforge)
 [![Website](https://img.shields.io/badge/Website-slideforge.dev-orange)](https://slideforge.dev)
 [![Docs](https://img.shields.io/badge/Docs-slideforge.dev%2Fdocs-lightgrey)](https://slideforge.dev/docs)
 
@@ -268,7 +268,7 @@ The self-review loop (render → view inline preview → fix → re-render) is d
 
 - Website: [slideforge.dev](https://slideforge.dev) · Pricing: [/pricing](https://slideforge.dev/pricing) · Trust & honesty layer: [/trust](https://slideforge.dev/trust)
 - Docs: [REST](https://slideforge.dev/docs/api) · [MCP](https://slideforge.dev/docs/mcp) · [Quickstart](https://slideforge.dev/docs/quickstart) · [Deck Doctor](https://slideforge.dev/docs/api/inspect)
-- Smithery: [smartdatabrokers/slideforge](https://smithery.ai/servers/smartdatabrokers/slideforge)
+- LightNow: [dev.slideforge/slideforge](https://lightnow.ai/servers/dev.slideforge/slideforge)
 - X / Twitter: [@slideforgedev](https://x.com/slideforgedev)
 
 ## License
